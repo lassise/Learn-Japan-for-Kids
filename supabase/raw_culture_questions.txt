@@ -1,0 +1,1399 @@
+- Take off shoes in many homes.
+  Question 1: What is a common first step when entering a home?
+  A. Take off your shoes and place them neatly
+  B. Put your shoes on the couch
+  C. Keep your shoes on in the living room
+  Answer: A
+
+- Slippers are often used indoors.
+  Question 2: Why might a home have slippers for guests?
+  A. To use as toys
+  B. To wear inside instead of shoes
+  C. To wear outside on the street
+  Answer: B
+
+- Some homes have bathroom-only slippers.
+  Question 3: What is special about bathroom slippers?
+  A. They are for sleeping
+  B. They are for running outside
+  C. They are only for the bathroom area
+  Answer: C
+
+- People often bow to greet.
+  Question 4: What can a small bow show?
+  A. That you are bored
+  B. Respect
+  C. That you want to race
+  Answer: B
+
+- Lines are common at trains and stores.
+  Question 5: What should you do when others are waiting?
+  A. Push past people
+  B. Cut to the front quickly
+  C. Stand in line and wait
+  Answer: C
+
+- Quiet voices are common on trains.
+  Question 6: What is a good train behavior?
+  A. Shout across the car
+  B. Talk softly
+  C. Play videos out loud
+  Answer: B
+
+- Phones are often on silent in public.
+  Question 7: What might you do with your phone on a train?
+  A. Turn the volume up
+  B. Play a game with sound
+  C. Put it on silent
+  Answer: C
+
+- Itadakimasu (Ee-tah-dah-KEE-mahs) is said before eating.
+  Question 8: When do people often say Itadakimasu (Ee-tah-dah-KEE-mahs)?
+  A. Before eating
+  B. After eating
+  C. Before sleeping
+  Answer: A
+
+- Gochisousama (Go-chee-SOH-sah-mah) is said after eating.
+  Question 9: When do people often say Gochisousama (Go-chee-SOH-sah-mah)?
+  A. When meeting a friend
+  B. After eating
+  C. Before eating
+  Answer: B
+
+- Arigatou (Ah-REE-gah-toh) means thank you.
+  Question 10: What does Arigatou (Ah-REE-gah-toh) mean?
+  A. Good morning
+  B. Thank you
+  C. Excuse me
+  Answer: B
+
+- Sumimasen (Sue-mee-MAH-sen) can mean excuse me.
+  Question 11: Why might someone say Sumimasen (Sue-mee-MAH-sen)?
+  A. To say good night
+  B. To get attention politely
+  C. To say you are full
+  Answer: B
+
+- Onegaishimasu (Oh-neh-gai-shee-MAH-s) is used when asking politely.
+  Question 12: When might you say Onegaishimasu (Oh-neh-gai-shee-MAH-s)?
+  A. When saying goodbye
+  B. When telling a joke
+  C. When making a polite request
+  Answer: C
+
+- Gomen nasai (Go-men nah-SAI) is an apology.
+  Question 13: When might you say Gomen nasai (Go-men nah-SAI)?
+  A. After winning a game
+  B. After opening a present
+  C. After bumping into someone
+  Answer: C
+
+- Chopsticks have special manners.
+  Question 14: What is a good chopsticks choice?
+  A. Point them at people
+  B. Set them down neatly when done
+  C. Stick them upright in rice
+  Answer: B
+
+- Passing items with two hands can be polite.
+  Question 15: Why use two hands to give something?
+  A. To show respect
+  B. To make it heavier
+  C. To show you are fast
+  Answer: A
+
+- Trash cans can be rare in public.
+  Question 16: What might you do with trash if there is no bin?
+  A. Hide it under a seat
+  B. Keep it until you find a bin
+  C. Drop it on the ground
+  Answer: B
+
+- Recycling and sorting are common.
+  Question 17: Why might there be different trash bins?
+  A. For hiding snacks
+  B. For sorting different kinds of trash
+  C. For storing shoes
+  Answer: B
+
+- Being on time matters.
+  Question 18: What is a good habit for meetings?
+  A. Arrive on time
+  B. Arrive very late
+  C. Skip without telling
+  Answer: A
+
+- Personal space is respected.
+  Question 19: What is a polite choice in a crowded place?
+  A. Run and weave
+  B. Avoid bumping into others
+  C. Push through people
+  Answer: B
+
+- At shrines, people may rinse hands.
+  Question 20: Why rinse hands at a shrine?
+  A. To wash toys
+  B. To be respectful
+  C. To cool candy
+  Answer: B
+
+- At some shrines, you bow before entering.
+  Question 21: When might you bow at a shrine?
+  A. Before going in
+  B. While tying shoes
+  C. While eating noodles
+  Answer: A
+
+- Konnichiwa (Kon-NEE-chee-wah) is a daytime greeting.
+  Question 22: What does Konnichiwa (Kon-NEE-chee-wah) mean?
+  A. Good night
+  B. Hello / Good day
+  C. Goodbye
+  Answer: B
+
+- Ohayou (Oh-HAH-yoh) is a morning greeting.
+  Question 23: When do people often say Ohayou (Oh-HAH-yoh)?
+  A. In the morning
+  B. At midnight
+  C. After dinner
+  Answer: A
+
+- Konbanwa (Kon-bahn-wah) is an evening greeting.
+  Question 24: What does Konbanwa (Kon-bahn-wah) mean?
+  A. Nice to meet you
+  B. Good evening
+  C. Good morning
+  Answer: B
+
+- Sayonara (Sah-yoh-NAH-rah) can mean goodbye.
+  Question 25: When might you say Sayonara (Sah-yoh-NAH-rah)?
+  A. When leaving
+  B. When eating
+  C. When waking up
+  Answer: A
+
+- Inside voices are valued at temples and trains.
+  Question 26: Where should you use a quiet voice?
+  A. At a loud concert
+  B. On a playground
+  C. On trains and at temples
+  Answer: C
+
+- People often wait for the walk signal.
+  Question 27: What is a common street rule?
+  A. Run across any time
+  B. Wait for the signal to cross
+  C. Cross while texting
+  Answer: B
+
+- Escalators often have a standing side.
+  Question 28: What should you do on an escalator in a busy station?
+  A. Walk backwards
+  B. Stand to one side if people pass
+  C. Sit on the steps
+  Answer: B
+
+- Many people carry a small towel/handkerchief.
+  Question 29: Why might someone carry a small towel?
+  A. To dry hands
+  B. To cover a sandwich
+  C. To play tug-of-war
+  Answer: A
+
+- School kids often clean their classroom.
+  Question 30: Why might students help clean at school?
+  A. To earn candy
+  B. To avoid homework forever
+  C. To take care of shared spaces
+  Answer: C
+
+- Shoes are often removed in some traditional rooms.
+  Question 31: Which place might ask you to remove shoes?
+  A. A swimming pool
+  B. A tatami room
+  C. A bus stop
+  Answer: B
+
+- Tatami mats are woven floor mats.
+  Question 32: What is tatami?
+  A. A kind of car
+  B. A kind of phone
+  C. A kind of floor mat
+  Answer: C
+
+- Bento is a packed lunch box.
+  Question 33: What is a bento?
+  A. A type of shoe
+  B. A video game
+  C. A lunch box with food
+  Answer: C
+
+- Onigiri are rice balls.
+  Question 34: What are onigiri?
+  A. Rice balls
+  B. Cold soup
+  C. Sweet donuts
+  Answer: A
+
+- Miso soup is common.
+  Question 35: What is miso soup usually made from?
+  A. Soda
+  B. Miso paste
+  C. Chocolate
+  Answer: B
+
+- Green tea is popular.
+  Question 36: What is a common drink in Japan?
+  A. Hot chocolate only
+  B. Green tea
+  C. Milkshakes only
+  Answer: B
+
+- Cherry blossoms are called sakura.
+  Question 37: What does sakura mean?
+  A. Cherry blossoms
+  B. Snowman
+  C. Thunder
+  Answer: A
+
+- Hanami is viewing cherry blossoms.
+  Question 38: What is hanami?
+  A. Watching fireworks only
+  B. Looking at cherry blossoms
+  C. Building a sandcastle
+  Answer: B
+
+- A shrine (jinja) is different from a temple (tera).
+  Question 39: Which place is often for Shinto?
+  A. Shrine
+  B. Library
+  C. Temple
+  Answer: A
+
+- Many people take a bath at night.
+  Question 40: When might families take a bath?
+  A. Only outside
+  B. Only at noon
+  C. In the evening
+  Answer: C
+
+- Bathing often means washing first, then soaking.
+  Question 41: What is a common bath order?
+  A. Soak first, then wash
+  B. Wear shoes in the tub
+  C. Wash first, then soak
+  Answer: C
+
+- Some toilets have many buttons.
+  Question 42: What is a good rule in a new bathroom?
+  A. Press every button fast
+  B. Ignore instructions
+  C. Ask or look at signs
+  Answer: C
+
+- Gift wrapping is often careful and neat.
+  Question 43: Why is gift wrapping often neat?
+  A. It makes gifts louder
+  B. It makes gifts heavier
+  C. It shows care
+  Answer: C
+
+- People may refuse a gift once or twice politely.
+  Question 44: What might happen when you offer a gift?
+  A. They may say no at first to be polite
+  B. They will throw it away
+  C. They will always take it instantly
+  Answer: A
+
+- Indoor shoes vs outdoor shoes are different.
+  Question 45: Where should outdoor shoes usually stay?
+  A. On the bed
+  B. On the dining table
+  C. Near the entrance
+  Answer: C
+
+- Some restaurants use a ticket machine to order.
+  Question 46: How might you order at some noodle shops?
+  A. Leave money on the floor
+  B. Buy a ticket first
+  C. Yell your order loudly
+  Answer: B
+
+- You may hear ‘Irasshaimase’ in shops.
+  Question 47: What does Irasshaimase often mean?
+  A. Goodbye
+  B. Welcome
+  C. Hurry up
+  Answer: B
+
+- People avoid eating while walking in some places.
+  Question 48: What is often a better choice with snacks?
+  A. Stop and eat, then walk
+  B. Throw food on the street
+  C. Eat while running
+  Answer: A
+
+- Seasonal foods are enjoyed.
+  Question 49: Why do people talk about seasonal foods?
+  A. They are all candy
+  B. They never change
+  C. They change with the seasons
+  Answer: C
+
+- New Year is an important holiday.
+  Question 50: What do many families do for New Year?
+  A. Only play soccer
+  B. Visit family and shrines
+  C. Ignore the day
+  Answer: B
+
+- Respect for elders is important.
+  Question 51: How can you show respect to older people?
+  A. Make fun of them
+  B. Interrupt a lot
+  C. Use polite words and listen
+  Answer: C
+
+- Taking turns is valued in groups.
+  Question 52: What is a good group habit?
+  A. Wait your turn
+  B. Grab things first
+  C. Shout over others
+  Answer: A
+
+- Kawaii means cute.
+  Question 53: What does kawaii mean?
+  A. Angry
+  B. Fast
+  C. Cute
+  Answer: C
+
+- Anime is Japanese animation.
+  Question 54: What is anime?
+  A. A train ticket
+  B. A kind of sandwich
+  C. Japanese cartoons/animation
+  Answer: C
+
+- Manga are Japanese comics.
+  Question 55: What is manga?
+  A. A sport
+  B. Japanese comics
+  C. A fruit
+  Answer: B
+
+- Ryokan are traditional inns.
+  Question 56: What is a ryokan?
+  A. A spaceship
+  B. A fast food
+  C. A traditional inn
+  Answer: C
+
+- Futons may be used for sleeping.
+  Question 57: What is a futon?
+  A. A soup bowl
+  B. A bicycle
+  C. A bed you can fold/roll
+  Answer: C
+
+- Vending machines are common.
+  Question 58: Where might you see vending machines?
+  A. Only underwater
+  B. Many streets and stations
+  C. Only in forests
+  Answer: B
+
+- Convenience stores are called konbini.
+  Question 59: What is a konbini?
+  A. A convenience store
+  B. A museum
+  C. A school bus
+  Answer: A
+
+- Taking a small gift when visiting is common.
+  Question 60: What might you bring when visiting someone?
+  A. A small snack or gift
+  B. A pile of trash
+  C. A loud horn
+  Answer: A
+
+- Take off shoes in many homes.
+  Question 61: What is a common first step when entering a home?
+  A. Keep your shoes on in the living room
+  B. Put your shoes on the couch
+  C. Take off your shoes and place them neatly
+  Answer: C
+
+- Slippers are often used indoors.
+  Question 62: Why might a home have slippers for guests?
+  A. To wear outside on the street
+  B. To use as toys
+  C. To wear inside instead of shoes
+  Answer: C
+
+- Some homes have bathroom-only slippers.
+  Question 63: What is special about bathroom slippers?
+  A. They are for running outside
+  B. They are only for the bathroom area
+  C. They are for sleeping
+  Answer: B
+
+- People often bow to greet.
+  Question 64: What can a small bow show?
+  A. That you want to race
+  B. That you are bored
+  C. Respect
+  Answer: C
+
+- Lines are common at trains and stores.
+  Question 65: What should you do when others are waiting?
+  A. Stand in line and wait
+  B. Push past people
+  C. Cut to the front quickly
+  Answer: A
+
+- Quiet voices are common on trains.
+  Question 66: What is a good train behavior?
+  A. Shout across the car
+  B. Play videos out loud
+  C. Talk softly
+  Answer: C
+
+- Phones are often on silent in public.
+  Question 67: What might you do with your phone on a train?
+  A. Turn the volume up
+  B. Put it on silent
+  C. Play a game with sound
+  Answer: B
+
+- Itadakimasu (Ee-tah-dah-KEE-mahs) is said before eating.
+  Question 68: When do people often say Itadakimasu (Ee-tah-dah-KEE-mahs)?
+  A. Before sleeping
+  B. Before eating
+  C. After eating
+  Answer: B
+
+- Gochisousama (Go-chee-SOH-sah-mah) is said after eating.
+  Question 69: When do people often say Gochisousama (Go-chee-SOH-sah-mah)?
+  A. Before eating
+  B. After eating
+  C. When meeting a friend
+  Answer: B
+
+- Arigatou (Ah-REE-gah-toh) means thank you.
+  Question 70: What does Arigatou (Ah-REE-gah-toh) mean?
+  A. Excuse me
+  B. Thank you
+  C. Good morning
+  Answer: B
+
+- Sumimasen (Sue-mee-MAH-sen) can mean excuse me.
+  Question 71: Why might someone say Sumimasen (Sue-mee-MAH-sen)?
+  A. To say good night
+  B. To get attention politely
+  C. To say you are full
+  Answer: B
+
+- Onegaishimasu (Oh-neh-gai-shee-MAH-s) is used when asking politely.
+  Question 72: When might you say Onegaishimasu (Oh-neh-gai-shee-MAH-s)?
+  A. When saying goodbye
+  B. When making a polite request
+  C. When telling a joke
+  Answer: B
+
+- Gomen nasai (Go-men nah-SAI) is an apology.
+  Question 73: When might you say Gomen nasai (Go-men nah-SAI)?
+  A. After winning a game
+  B. After opening a present
+  C. After bumping into someone
+  Answer: C
+
+- Chopsticks have special manners.
+  Question 74: What is a good chopsticks choice?
+  A. Set them down neatly when done
+  B. Point them at people
+  C. Stick them upright in rice
+  Answer: A
+
+- Passing items with two hands can be polite.
+  Question 75: Why use two hands to give something?
+  A. To make it heavier
+  B. To show respect
+  C. To show you are fast
+  Answer: B
+
+- Trash cans can be rare in public.
+  Question 76: What might you do with trash if there is no bin?
+  A. Hide it under a seat
+  B. Keep it until you find a bin
+  C. Drop it on the ground
+  Answer: B
+
+- Recycling and sorting are common.
+  Question 77: Why might there be different trash bins?
+  A. For hiding snacks
+  B. For storing shoes
+  C. For sorting different kinds of trash
+  Answer: C
+
+- Being on time matters.
+  Question 78: What is a good habit for meetings?
+  A. Skip without telling
+  B. Arrive very late
+  C. Arrive on time
+  Answer: C
+
+- Personal space is respected.
+  Question 79: What is a polite choice in a crowded place?
+  A. Run and weave
+  B. Push through people
+  C. Avoid bumping into others
+  Answer: C
+
+- At shrines, people may rinse hands.
+  Question 80: Why rinse hands at a shrine?
+  A. To be respectful
+  B. To cool candy
+  C. To wash toys
+  Answer: A
+
+- At some shrines, you bow before entering.
+  Question 81: When might you bow at a shrine?
+  A. Before going in
+  B. While eating noodles
+  C. While tying shoes
+  Answer: A
+
+- Konnichiwa (Kon-NEE-chee-wah) is a daytime greeting.
+  Question 82: What does Konnichiwa (Kon-NEE-chee-wah) mean?
+  A. Good night
+  B. Hello / Good day
+  C. Goodbye
+  Answer: B
+
+- Ohayou (Oh-HAH-yoh) is a morning greeting.
+  Question 83: When do people often say Ohayou (Oh-HAH-yoh)?
+  A. At midnight
+  B. In the morning
+  C. After dinner
+  Answer: B
+
+- Konbanwa (Kon-bahn-wah) is an evening greeting.
+  Question 84: What does Konbanwa (Kon-bahn-wah) mean?
+  A. Good morning
+  B. Nice to meet you
+  C. Good evening
+  Answer: C
+
+- Sayonara (Sah-yoh-NAH-rah) can mean goodbye.
+  Question 85: When might you say Sayonara (Sah-yoh-NAH-rah)?
+  A. When waking up
+  B. When leaving
+  C. When eating
+  Answer: B
+
+- Inside voices are valued at temples and trains.
+  Question 86: Where should you use a quiet voice?
+  A. On a playground
+  B. On trains and at temples
+  C. At a loud concert
+  Answer: B
+
+- People often wait for the walk signal.
+  Question 87: What is a common street rule?
+  A. Run across any time
+  B. Cross while texting
+  C. Wait for the signal to cross
+  Answer: C
+
+- Escalators often have a standing side.
+  Question 88: What should you do on an escalator in a busy station?
+  A. Walk backwards
+  B. Sit on the steps
+  C. Stand to one side if people pass
+  Answer: C
+
+- Many people carry a small towel/handkerchief.
+  Question 89: Why might someone carry a small towel?
+  A. To dry hands
+  B. To cover a sandwich
+  C. To play tug-of-war
+  Answer: A
+
+- School kids often clean their classroom.
+  Question 90: Why might students help clean at school?
+  A. To earn candy
+  B. To avoid homework forever
+  C. To take care of shared spaces
+  Answer: C
+
+- Shoes are often removed in some traditional rooms.
+  Question 91: Which place might ask you to remove shoes?
+  A. A swimming pool
+  B. A bus stop
+  C. A tatami room
+  Answer: C
+
+- Tatami mats are woven floor mats.
+  Question 92: What is tatami?
+  A. A kind of floor mat
+  B. A kind of phone
+  C. A kind of car
+  Answer: A
+
+- Bento is a packed lunch box.
+  Question 93: What is a bento?
+  A. A video game
+  B. A lunch box with food
+  C. A type of shoe
+  Answer: B
+
+- Onigiri are rice balls.
+  Question 94: What are onigiri?
+  A. Cold soup
+  B. Sweet donuts
+  C. Rice balls
+  Answer: C
+
+- Miso soup is common.
+  Question 95: What is miso soup usually made from?
+  A. Soda
+  B. Chocolate
+  C. Miso paste
+  Answer: C
+
+- Green tea is popular.
+  Question 96: What is a common drink in Japan?
+  A. Milkshakes only
+  B. Green tea
+  C. Hot chocolate only
+  Answer: B
+
+- Cherry blossoms are called sakura.
+  Question 97: What does sakura mean?
+  A. Snowman
+  B. Cherry blossoms
+  C. Thunder
+  Answer: B
+
+- Hanami is viewing cherry blossoms.
+  Question 98: What is hanami?
+  A. Watching fireworks only
+  B. Building a sandcastle
+  C. Looking at cherry blossoms
+  Answer: C
+
+- A shrine (jinja) is different from a temple (tera).
+  Question 99: Which place is often for Shinto?
+  A. Shrine
+  B. Library
+  C. Temple
+  Answer: A
+
+- Many people take a bath at night.
+  Question 100: When might families take a bath?
+  A. Only at noon
+  B. Only outside
+  C. In the evening
+  Answer: C
+
+- Bathing often means washing first, then soaking.
+  Question 101: What is a common bath order?
+  A. Soak first, then wash
+  B. Wash first, then soak
+  C. Wear shoes in the tub
+  Answer: B
+
+- Some toilets have many buttons.
+  Question 102: What is a good rule in a new bathroom?
+  A. Press every button fast
+  B. Ignore instructions
+  C. Ask or look at signs
+  Answer: B
+
+- Gift wrapping is often careful and neat.
+  Question 103: Why is gift wrapping often neat?
+  A. It shows care
+  B. It makes gifts louder
+  C. It makes gifts heavier
+  Answer: A
+
+- People may refuse a gift once or twice politely.
+  Question 104: What might happen when you offer a gift?
+  A. They will throw it away
+  B. They may say no at first to be polite
+  C. They will always take it instantly
+  Answer: B
+
+- Indoor shoes vs outdoor shoes are different.
+  Question 105: Where should outdoor shoes usually stay?
+  A. On the bed
+  B. On the dining table
+  C. Near the entrance
+  Answer: C
+
+- Some restaurants use a ticket machine to order.
+  Question 106: How might you order at some noodle shops?
+  A. Buy a ticket first
+  B. Leave money on the floor
+  C. Yell your order loudly
+  Answer: A
+
+- You may hear ‘Irasshaimase’ in shops.
+  Question 107: What does Irasshaimase often mean?
+  A. Goodbye
+  B. Welcome
+  C. Hurry up
+  Answer: B
+
+- People avoid eating while walking in some places.
+  Question 108: What is often a better choice with snacks?
+  A. Eat while running
+  B. Stop and eat, then walk
+  C. Throw food on the street
+  Answer: B
+
+- Seasonal foods are enjoyed.
+  Question 109: Why do people talk about seasonal foods?
+  A. They change with the seasons
+  B. They are all candy
+  C. They never change
+  Answer: A
+
+- New Year is an important holiday.
+  Question 110: What do many families do for New Year?
+  A. Only play soccer
+  B. Ignore the day
+  C. Visit family and shrines
+  Answer: C
+
+- Respect for elders is important.
+  Question 111: How can you show respect to older people?
+  A. Make fun of them
+  B. Interrupt a lot
+  C. Use polite words and listen
+  Answer: C
+
+- Taking turns is valued in groups.
+  Question 112: What is a good group habit?
+  A. Shout over others
+  B. Grab things first
+  C. Wait your turn
+  Answer: C
+
+- Kawaii means cute.
+  Question 113: What does kawaii mean?
+  A. Angry
+  B. Cute
+  C. Fast
+  Answer: B
+
+- Anime is Japanese animation.
+  Question 114: What is anime?
+  A. Japanese cartoons/animation
+  B. A kind of sandwich
+  C. A train ticket
+  Answer: A
+
+- Manga are Japanese comics.
+  Question 115: What is manga?
+  A. A fruit
+  B. Japanese comics
+  C. A sport
+  Answer: B
+
+- Ryokan are traditional inns.
+  Question 116: What is a ryokan?
+  A. A spaceship
+  B. A traditional inn
+  C. A fast food
+  Answer: B
+
+- Futons may be used for sleeping.
+  Question 117: What is a futon?
+  A. A bicycle
+  B. A soup bowl
+  C. A bed you can fold/roll
+  Answer: C
+
+- Vending machines are common.
+  Question 118: Where might you see vending machines?
+  A. Only in forests
+  B. Many streets and stations
+  C. Only underwater
+  Answer: B
+
+- Convenience stores are called konbini.
+  Question 119: What is a konbini?
+  A. A convenience store
+  B. A school bus
+  C. A museum
+  Answer: A
+
+- Taking a small gift when visiting is common.
+  Question 120: What might you bring when visiting someone?
+  A. A small snack or gift
+  B. A loud horn
+  C. A pile of trash
+  Answer: A
+
+- Take off shoes in many homes.
+  Question 121: What is a common first step when entering a home?
+  A. Take off your shoes and place them neatly
+  B. Put your shoes on the couch
+  C. Keep your shoes on in the living room
+  Answer: A
+
+- Slippers are often used indoors.
+  Question 122: Why might a home have slippers for guests?
+  A. To wear outside on the street
+  B. To wear inside instead of shoes
+  C. To use as toys
+  Answer: B
+
+- Some homes have bathroom-only slippers.
+  Question 123: What is special about bathroom slippers?
+  A. They are for running outside
+  B. They are only for the bathroom area
+  C. They are for sleeping
+  Answer: B
+
+- People often bow to greet.
+  Question 124: What can a small bow show?
+  A. That you are bored
+  B. Respect
+  C. That you want to race
+  Answer: B
+
+- Lines are common at trains and stores.
+  Question 125: What should you do when others are waiting?
+  A. Push past people
+  B. Stand in line and wait
+  C. Cut to the front quickly
+  Answer: B
+
+- Quiet voices are common on trains.
+  Question 126: What is a good train behavior?
+  A. Shout across the car
+  B. Talk softly
+  C. Play videos out loud
+  Answer: B
+
+- Phones are often on silent in public.
+  Question 127: What might you do with your phone on a train?
+  A. Turn the volume up
+  B. Play a game with sound
+  C. Put it on silent
+  Answer: C
+
+- Itadakimasu (Ee-tah-dah-KEE-mahs) is said before eating.
+  Question 128: When do people often say Itadakimasu (Ee-tah-dah-KEE-mahs)?
+  A. Before eating
+  B. Before sleeping
+  C. After eating
+  Answer: A
+
+- Gochisousama (Go-chee-SOH-sah-mah) is said after eating.
+  Question 129: When do people often say Gochisousama (Go-chee-SOH-sah-mah)?
+  A. When meeting a friend
+  B. After eating
+  C. Before eating
+  Answer: B
+
+- Arigatou (Ah-REE-gah-toh) means thank you.
+  Question 130: What does Arigatou (Ah-REE-gah-toh) mean?
+  A. Thank you
+  B. Excuse me
+  C. Good morning
+  Answer: A
+
+- Sumimasen (Sue-mee-MAH-sen) can mean excuse me.
+  Question 131: Why might someone say Sumimasen (Sue-mee-MAH-sen)?
+  A. To say good night
+  B. To say you are full
+  C. To get attention politely
+  Answer: C
+
+- Onegaishimasu (Oh-neh-gai-shee-MAH-s) is used when asking politely.
+  Question 132: When might you say Onegaishimasu (Oh-neh-gai-shee-MAH-s)?
+  A. When saying goodbye
+  B. When making a polite request
+  C. When telling a joke
+  Answer: B
+
+- Gomen nasai (Go-men nah-SAI) is an apology.
+  Question 133: When might you say Gomen nasai (Go-men nah-SAI)?
+  A. After bumping into someone
+  B. After opening a present
+  C. After winning a game
+  Answer: A
+
+- Chopsticks have special manners.
+  Question 134: What is a good chopsticks choice?
+  A. Stick them upright in rice
+  B. Set them down neatly when done
+  C. Point them at people
+  Answer: B
+
+- Passing items with two hands can be polite.
+  Question 135: Why use two hands to give something?
+  A. To show respect
+  B. To make it heavier
+  C. To show you are fast
+  Answer: A
+
+- Trash cans can be rare in public.
+  Question 136: What might you do with trash if there is no bin?
+  A. Keep it until you find a bin
+  B. Drop it on the ground
+  C. Hide it under a seat
+  Answer: A
+
+- Recycling and sorting are common.
+  Question 137: Why might there be different trash bins?
+  A. For storing shoes
+  B. For hiding snacks
+  C. For sorting different kinds of trash
+  Answer: C
+
+- Being on time matters.
+  Question 138: What is a good habit for meetings?
+  A. Arrive very late
+  B. Skip without telling
+  C. Arrive on time
+  Answer: C
+
+- Personal space is respected.
+  Question 139: What is a polite choice in a crowded place?
+  A. Run and weave
+  B. Avoid bumping into others
+  C. Push through people
+  Answer: B
+
+- At shrines, people may rinse hands.
+  Question 140: Why rinse hands at a shrine?
+  A. To be respectful
+  B. To wash toys
+  C. To cool candy
+  Answer: A
+
+- At some shrines, you bow before entering.
+  Question 141: When might you bow at a shrine?
+  A. While eating noodles
+  B. While tying shoes
+  C. Before going in
+  Answer: C
+
+- Konnichiwa (Kon-NEE-chee-wah) is a daytime greeting.
+  Question 142: What does Konnichiwa (Kon-NEE-chee-wah) mean?
+  A. Good night
+  B. Goodbye
+  C. Hello / Good day
+  Answer: C
+
+- Ohayou (Oh-HAH-yoh) is a morning greeting.
+  Question 143: When do people often say Ohayou (Oh-HAH-yoh)?
+  A. After dinner
+  B. In the morning
+  C. At midnight
+  Answer: B
+
+- Konbanwa (Kon-bahn-wah) is an evening greeting.
+  Question 144: What does Konbanwa (Kon-bahn-wah) mean?
+  A. Good morning
+  B. Good evening
+  C. Nice to meet you
+  Answer: B
+
+- Sayonara (Sah-yoh-NAH-rah) can mean goodbye.
+  Question 145: When might you say Sayonara (Sah-yoh-NAH-rah)?
+  A. When waking up
+  B. When leaving
+  C. When eating
+  Answer: B
+
+- Inside voices are valued at temples and trains.
+  Question 146: Where should you use a quiet voice?
+  A. On a playground
+  B. At a loud concert
+  C. On trains and at temples
+  Answer: C
+
+- People often wait for the walk signal.
+  Question 147: What is a common street rule?
+  A. Wait for the signal to cross
+  B. Cross while texting
+  C. Run across any time
+  Answer: A
+
+- Escalators often have a standing side.
+  Question 148: What should you do on an escalator in a busy station?
+  A. Walk backwards
+  B. Sit on the steps
+  C. Stand to one side if people pass
+  Answer: C
+
+- Many people carry a small towel/handkerchief.
+  Question 149: Why might someone carry a small towel?
+  A. To dry hands
+  B. To cover a sandwich
+  C. To play tug-of-war
+  Answer: A
+
+- School kids often clean their classroom.
+  Question 150: Why might students help clean at school?
+  A. To take care of shared spaces
+  B. To earn candy
+  C. To avoid homework forever
+  Answer: A
+
+- Shoes are often removed in some traditional rooms.
+  Question 151: Which place might ask you to remove shoes?
+  A. A tatami room
+  B. A swimming pool
+  C. A bus stop
+  Answer: A
+
+- Tatami mats are woven floor mats.
+  Question 152: What is tatami?
+  A. A kind of phone
+  B. A kind of floor mat
+  C. A kind of car
+  Answer: B
+
+- Bento is a packed lunch box.
+  Question 153: What is a bento?
+  A. A type of shoe
+  B. A video game
+  C. A lunch box with food
+  Answer: C
+
+- Onigiri are rice balls.
+  Question 154: What are onigiri?
+  A. Sweet donuts
+  B. Rice balls
+  C. Cold soup
+  Answer: B
+
+- Miso soup is common.
+  Question 155: What is miso soup usually made from?
+  A. Miso paste
+  B. Chocolate
+  C. Soda
+  Answer: A
+
+- Green tea is popular.
+  Question 156: What is a common drink in Japan?
+  A. Green tea
+  B. Hot chocolate only
+  C. Milkshakes only
+  Answer: A
+
+- Cherry blossoms are called sakura.
+  Question 157: What does sakura mean?
+  A. Thunder
+  B. Cherry blossoms
+  C. Snowman
+  Answer: B
+
+- Hanami is viewing cherry blossoms.
+  Question 158: What is hanami?
+  A. Building a sandcastle
+  B. Looking at cherry blossoms
+  C. Watching fireworks only
+  Answer: B
+
+- A shrine (jinja) is different from a temple (tera).
+  Question 159: Which place is often for Shinto?
+  A. Shrine
+  B. Library
+  C. Temple
+  Answer: A
+
+- Many people take a bath at night.
+  Question 160: When might families take a bath?
+  A. Only at noon
+  B. Only outside
+  C. In the evening
+  Answer: C
+
+- Bathing often means washing first, then soaking.
+  Question 161: What is a common bath order?
+  A. Wear shoes in the tub
+  B. Wash first, then soak
+  C. Soak first, then wash
+  Answer: B
+
+- Some toilets have many buttons.
+  Question 162: What is a good rule in a new bathroom?
+  A. Press every button fast
+  B. Ignore instructions
+  C. Ask or look at signs
+  Answer: C
+
+- Gift wrapping is often careful and neat.
+  Question 163: Why is gift wrapping often neat?
+  A. It makes gifts louder
+  B. It shows care
+  C. It makes gifts heavier
+  Answer: B
+
+- People may refuse a gift once or twice politely.
+  Question 164: What might happen when you offer a gift?
+  A. They will throw it away
+  B. They may say no at first to be polite
+  C. They will always take it instantly
+  Answer: B
+
+- Indoor shoes vs outdoor shoes are different.
+  Question 165: Where should outdoor shoes usually stay?
+  A. Near the entrance
+  B. On the bed
+  C. On the dining table
+  Answer: A
+
+- Some restaurants use a ticket machine to order.
+  Question 166: How might you order at some noodle shops?
+  A. Yell your order loudly
+  B. Leave money on the floor
+  C. Buy a ticket first
+  Answer: C
+
+- You may hear ‘Irasshaimase’ in shops.
+  Question 167: What does Irasshaimase often mean?
+  A. Hurry up
+  B. Goodbye
+  C. Welcome
+  Answer: C
+
+- People avoid eating while walking in some places.
+  Question 168: What is often a better choice with snacks?
+  A. Throw food on the street
+  B. Stop and eat, then walk
+  C. Eat while running
+  Answer: B
+
+- Seasonal foods are enjoyed.
+  Question 169: Why do people talk about seasonal foods?
+  A. They never change
+  B. They change with the seasons
+  C. They are all candy
+  Answer: B
+
+- New Year is an important holiday.
+  Question 170: What do many families do for New Year?
+  A. Only play soccer
+  B. Visit family and shrines
+  C. Ignore the day
+  Answer: B
+
+- Respect for elders is important.
+  Question 171: How can you show respect to older people?
+  A. Interrupt a lot
+  B. Make fun of them
+  C. Use polite words and listen
+  Answer: C
+
+- Taking turns is valued in groups.
+  Question 172: What is a good group habit?
+  A. Wait your turn
+  B. Shout over others
+  C. Grab things first
+  Answer: A
+
+- Kawaii means cute.
+  Question 173: What does kawaii mean?
+  A. Angry
+  B. Cute
+  C. Fast
+  Answer: B
+
+- Anime is Japanese animation.
+  Question 174: What is anime?
+  A. A train ticket
+  B. Japanese cartoons/animation
+  C. A kind of sandwich
+  Answer: B
+
+- Manga are Japanese comics.
+  Question 175: What is manga?
+  A. A fruit
+  B. A sport
+  C. Japanese comics
+  Answer: C
+
+- Ryokan are traditional inns.
+  Question 176: What is a ryokan?
+  A. A traditional inn
+  B. A spaceship
+  C. A fast food
+  Answer: A
+
+- Futons may be used for sleeping.
+  Question 177: What is a futon?
+  A. A soup bowl
+  B. A bicycle
+  C. A bed you can fold/roll
+  Answer: C
+
+- Vending machines are common.
+  Question 178: Where might you see vending machines?
+  A. Only underwater
+  B. Many streets and stations
+  C. Only in forests
+  Answer: B
+
+- Convenience stores are called konbini.
+  Question 179: What is a konbini?
+  A. A museum
+  B. A convenience store
+  C. A school bus
+  Answer: B
+
+- Taking a small gift when visiting is common.
+  Question 180: What might you bring when visiting someone?
+  A. A small snack or gift
+  B. A pile of trash
+  C. A loud horn
+  Answer: A
+
+- Take off shoes in many homes.
+  Question 181: What is a common first step when entering a home?
+  A. Take off your shoes and place them neatly
+  B. Put your shoes on the couch
+  C. Keep your shoes on in the living room
+  Answer: A
+
+- Slippers are often used indoors.
+  Question 182: Why might a home have slippers for guests?
+  A. To wear outside on the street
+  B. To wear inside instead of shoes
+  C. To use as toys
+  Answer: B
+
+- Some homes have bathroom-only slippers.
+  Question 183: What is special about bathroom slippers?
+  A. They are for running outside
+  B. They are for sleeping
+  C. They are only for the bathroom area
+  Answer: C
+
+- People often bow to greet.
+  Question 184: What can a small bow show?
+  A. That you are bored
+  B. That you want to race
+  C. Respect
+  Answer: C
+
+- Lines are common at trains and stores.
+  Question 185: What should you do when others are waiting?
+  A. Push past people
+  B. Stand in line and wait
+  C. Cut to the front quickly
+  Answer: B
+
+- Quiet voices are common on trains.
+  Question 186: What is a good train behavior?
+  A. Talk softly
+  B. Shout across the car
+  C. Play videos out loud
+  Answer: A
+
+- Phones are often on silent in public.
+  Question 187: What might you do with your phone on a train?
+  A. Play a game with sound
+  B. Put it on silent
+  C. Turn the volume up
+  Answer: B
+
+- Itadakimasu (Ee-tah-dah-KEE-mahs) is said before eating.
+  Question 188: When do people often say Itadakimasu (Ee-tah-dah-KEE-mahs)?
+  A. Before sleeping
+  B. Before eating
+  C. After eating
+  Answer: B
+
+- Gochisousama (Go-chee-SOH-sah-mah) is said after eating.
+  Question 189: When do people often say Gochisousama (Go-chee-SOH-sah-mah)?
+  A. When meeting a friend
+  B. Before eating
+  C. After eating
+  Answer: C
+
+- Arigatou (Ah-REE-gah-toh) means thank you.
+  Question 190: What does Arigatou (Ah-REE-gah-toh) mean?
+  A. Thank you
+  B. Excuse me
+  C. Good morning
+  Answer: A
+
+- Sumimasen (Sue-mee-MAH-sen) can mean excuse me.
+  Question 191: Why might someone say Sumimasen (Sue-mee-MAH-sen)?
+  A. To get attention politely
+  B. To say you are full
+  C. To say good night
+  Answer: A
+
+- Onegaishimasu (Oh-neh-gai-shee-MAH-s) is used when asking politely.
+  Question 192: When might you say Onegaishimasu (Oh-neh-gai-shee-MAH-s)?
+  A. When saying goodbye
+  B. When telling a joke
+  C. When making a polite request
+  Answer: C
+
+- Gomen nasai (Go-men nah-SAI) is an apology.
+  Question 193: When might you say Gomen nasai (Go-men nah-SAI)?
+  A. After opening a present
+  B. After winning a game
+  C. After bumping into someone
+  Answer: C
+
+- Chopsticks have special manners.
+  Question 194: What is a good chopsticks choice?
+  A. Point them at people
+  B. Stick them upright in rice
+  C. Set them down neatly when done
+  Answer: C
+
+- Passing items with two hands can be polite.
+  Question 195: Why use two hands to give something?
+  A. To show respect
+  B. To show you are fast
+  C. To make it heavier
+  Answer: A
+
+- Trash cans can be rare in public.
+  Question 196: What might you do with trash if there is no bin?
+  A. Drop it on the ground
+  B. Keep it until you find a bin
+  C. Hide it under a seat
+  Answer: B
+
+- Recycling and sorting are common.
+  Question 197: Why might there be different trash bins?
+  A. For storing shoes
+  B. For sorting different kinds of trash
+  C. For hiding snacks
+  Answer: B
+
+- Being on time matters.
+  Question 198: What is a good habit for meetings?
+  A. Arrive on time
+  B. Arrive very late
+  C. Skip without telling
+  Answer: A
+
+- Personal space is respected.
+  Question 199: What is a polite choice in a crowded place?
+  A. Run and weave
+  B. Avoid bumping into others
+  C. Push through people
+  Answer: B
+
+- At shrines, people may rinse hands.
+  Question 200: Why rinse hands at a shrine?
+  A. To cool candy
+  B. To wash toys
+  C. To be respectful
+  Answer: C
