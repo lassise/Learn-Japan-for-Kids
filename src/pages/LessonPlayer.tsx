@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import LessonCompletion from '../components/Lesson/LessonCompletion';
 import LessonEngine from '../components/Lesson/LessonEngine';
@@ -7,6 +7,117 @@ import { supabase } from '../lib/supabase';
 
 type Difficulty = 'easy' | 'medium' | 'hard';
 
+const DIFFICULTY_QUESTION_COUNTS: Record<Difficulty, number> = {
+    easy: 10,
+    medium: 20,
+    hard: 30
+};
+
+const RECENT_QUESTION_LIMIT = 180;
+
+const normalizeQuestionText = (text: string | null | undefined) =>
+    (text || '')
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+
+const hashString = (value: string) => {
+    let hash = 0;
+    for (let i = 0; i < value.length; i += 1) {
+        hash = (hash << 5) - hash + value.charCodeAt(i);
+        hash |= 0;
+    }
+    return Math.abs(hash);
+};
+
+const readRecentQuestionSignatures = (storageKey: string | null) => {
+    if (!storageKey || typeof window === 'undefined') return new Set<string>();
+
+    try {
+        const raw = window.localStorage.getItem(storageKey);
+        if (!raw) return new Set<string>();
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return new Set<string>();
+        return new Set(parsed.map((item: unknown) => String(item)));
+    } catch {
+        return new Set<string>();
+    }
+};
+
+const writeRecentQuestionSignatures = (storageKey: string | null, signatures: string[]) => {
+    if (!storageKey || !signatures.length || typeof window === 'undefined') return;
+
+    try {
+        const existing = window.localStorage.getItem(storageKey);
+        const parsed = existing ? JSON.parse(existing) : [];
+        const history = Array.isArray(parsed) ? parsed.map((item: unknown) => String(item)) : [];
+        const combined = [...history, ...signatures];
+
+        const seen = new Set<string>();
+        const dedupedFromEnd: string[] = [];
+        for (let i = combined.length - 1; i >= 0; i -= 1) {
+            const value = combined[i];
+            if (!value || seen.has(value)) continue;
+            seen.add(value);
+            dedupedFromEnd.push(value);
+        }
+
+        const finalHistory = dedupedFromEnd.reverse().slice(-RECENT_QUESTION_LIMIT);
+        window.localStorage.setItem(storageKey, JSON.stringify(finalHistory));
+    } catch {
+        // Ignore local cache write failures and continue gameplay.
+    }
+};
+
+const buildQuestionVariants = (activity: any): any[] => {
+    const baseQuestion = (activity?.question_text || '').trim();
+    if (!baseQuestion) return [];
+
+    const withoutQuestionMark = baseQuestion.replace(/\?$/, '');
+    const lowerBase = baseQuestion.toLowerCase();
+    const candidates: string[] = [baseQuestion];
+
+    if (lowerBase.startsWith('what is ')) {
+        const subject = withoutQuestionMark.replace(/^what is /i, '').trim();
+        candidates.push(`Which choice best describes ${subject}?`);
+        candidates.push(`${subject} is best described as which option?`);
+    } else if (lowerBase.startsWith('what are ')) {
+        const subject = withoutQuestionMark.replace(/^what are /i, '').trim();
+        candidates.push(`Which choice best describes ${subject}?`);
+        candidates.push(`${subject} are best described as which option?`);
+    } else if (lowerBase.startsWith('is ')) {
+        const statement = withoutQuestionMark.replace(/^is /i, '').trim();
+        candidates.push(`True or false: ${statement}.`);
+        candidates.push(`Check your understanding: ${statement}. Is this true?`);
+    } else if (lowerBase.startsWith('when ')) {
+        candidates.push(`Time check: ${withoutQuestionMark}.`);
+        candidates.push(`Choose the best time: ${baseQuestion}`);
+    } else if (lowerBase.startsWith('why ')) {
+        candidates.push(`Reasoning check: ${baseQuestion}`);
+        candidates.push(`What is the best reason? ${withoutQuestionMark}.`);
+    } else {
+        candidates.push(`Concept check: ${baseQuestion}`);
+        candidates.push(`Try it another way: ${baseQuestion}`);
+    }
+
+    const seen = new Set<string>();
+    const variants: any[] = [];
+
+    candidates.forEach((questionText, index) => {
+        const normalized = normalizeQuestionText(questionText);
+        if (!normalized || seen.has(normalized)) return;
+        seen.add(normalized);
+
+        variants.push({
+            ...activity,
+            id: index === 0 ? activity.id : `${activity.id}::v${index}`,
+            question_text: questionText
+        });
+    });
+
+    return variants;
+};
+
 export default function LessonPlayer() {
     const { childId, lessonId, branchId: routeBranchId } = useParams();
     const navigate = useNavigate();
@@ -14,8 +125,10 @@ export default function LessonPlayer() {
     const [loading, setLoading] = useState(true);
     const [lesson, setLesson] = useState<any>(null);
     const [activities, setActivities] = useState<any[]>([]);
+    const [branchQuestionPool, setBranchQuestionPool] = useState<any[]>([]);
     const [resolvedBranchId, setResolvedBranchId] = useState<string | null>(routeBranchId ?? null);
     const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
+    const [sessionNonce, setSessionNonce] = useState(() => `${Date.now()}-${Math.random()}`);
 
     const [isComplete, setIsComplete] = useState(false);
     const [completionStats, setCompletionStats] = useState<{
@@ -28,70 +141,185 @@ export default function LessonPlayer() {
 
     useEffect(() => {
         const fetchLessonData = async () => {
-            if (!lessonId) return;
+            if (!lessonId) {
+                setLoading(false);
+                return;
+            }
 
-            const { data: lessonData } = await supabase
-                .from('lessons')
-                .select('*')
-                .eq('id', lessonId)
-                .single();
-            setLesson(lessonData);
+            setLoading(true);
 
-            if (!routeBranchId && lessonData?.level_id) {
-                const { data: levelData } = await supabase
-                    .from('levels')
-                    .select('branch_id')
-                    .eq('id', lessonData.level_id)
+            try {
+                const { data: lessonData } = await supabase
+                    .from('lessons')
+                    .select('*')
+                    .eq('id', lessonId)
                     .single();
+                setLesson(lessonData);
 
-                if (levelData?.branch_id) {
-                    setResolvedBranchId(levelData.branch_id);
+                let effectiveBranchId = routeBranchId ?? null;
+                if (!effectiveBranchId && lessonData?.level_id) {
+                    const { data: levelData } = await supabase
+                        .from('levels')
+                        .select('branch_id')
+                        .eq('id', lessonData.level_id)
+                        .single();
+
+                    if (levelData?.branch_id) {
+                        effectiveBranchId = levelData.branch_id;
+                    }
                 }
-            } else if (routeBranchId) {
-                setResolvedBranchId(routeBranchId);
+
+                setResolvedBranchId(effectiveBranchId);
+
+                const { data: activitiesData } = await supabase
+                    .from('activities')
+                    .select('*')
+                    .eq('lesson_id', lessonId)
+                    .order('order_index', { ascending: true });
+
+                setActivities(activitiesData || []);
+
+                if (effectiveBranchId) {
+                    const { data: levelRows } = await supabase
+                        .from('levels')
+                        .select('id')
+                        .eq('branch_id', effectiveBranchId);
+
+                    const levelIds = (levelRows || []).map((level) => level.id);
+                    if (levelIds.length === 0) {
+                        setBranchQuestionPool([]);
+                    } else {
+                        const { data: lessonRows } = await supabase
+                            .from('lessons')
+                            .select('id')
+                            .in('level_id', levelIds);
+
+                        const branchLessonIds = (lessonRows || []).map((row) => row.id);
+                        if (branchLessonIds.length === 0) {
+                            setBranchQuestionPool([]);
+                        } else {
+                            const { data: branchActivities } = await supabase
+                                .from('activities')
+                                .select('*')
+                                .in('lesson_id', branchLessonIds)
+                                .eq('type', 'multiple_choice');
+
+                            setBranchQuestionPool(branchActivities || []);
+                        }
+                    }
+                } else {
+                    setBranchQuestionPool([]);
+                }
+            } finally {
+                setLoading(false);
             }
-
-            const { data: activitiesData } = await supabase
-                .from('activities')
-                .select('*')
-                .eq('lesson_id', lessonId)
-                .order('order_index', { ascending: true });
-
-            if (activitiesData) {
-                setActivities(activitiesData);
-            }
-
-            setLoading(false);
         };
 
         fetchLessonData();
     }, [lessonId, routeBranchId]);
 
-    const infoActivities = activities.filter((activity) => activity.type === 'info');
-    const questionActivities = activities.filter((activity) => activity.type !== 'info');
+    const infoActivities = useMemo(
+        () =>
+            activities
+                .filter((activity) => activity.type === 'info')
+                .sort((a, b) => a.order_index - b.order_index),
+        [activities]
+    );
 
-    let slicedQuestions = [...questionActivities];
-    if (difficulty === 'easy') {
-        slicedQuestions = questionActivities.slice(0, 10);
-    } else if (difficulty === 'medium') {
-        slicedQuestions = questionActivities.slice(0, 20);
-    } else if (difficulty === 'hard') {
-        slicedQuestions = questionActivities.slice(0, 30);
-    }
+    const lessonQuestionActivities = useMemo(
+        () => activities.filter((activity) => activity.type !== 'info'),
+        [activities]
+    );
 
-    const lessonActivities = [...infoActivities, ...slicedQuestions]
-        .sort((a, b) => a.order_index - b.order_index);
+    const questionCandidatePool = useMemo(() => {
+        const merged = [...lessonQuestionActivities, ...branchQuestionPool];
+        const unique = new Map<string, any>();
+
+        merged.forEach((question) => {
+            const signature = normalizeQuestionText(question.question_text);
+            if (!signature || unique.has(signature)) return;
+            unique.set(signature, question);
+        });
+
+        return Array.from(unique.values());
+    }, [lessonQuestionActivities, branchQuestionPool]);
+
+    const expandedQuestionPool = useMemo(() => {
+        const seen = new Set<string>();
+        const expanded: any[] = [];
+
+        questionCandidatePool.forEach((question) => {
+            buildQuestionVariants(question).forEach((variant) => {
+                const signature = normalizeQuestionText(variant.question_text);
+                if (!signature || seen.has(signature)) return;
+                seen.add(signature);
+                expanded.push(variant);
+            });
+        });
+
+        return expanded;
+    }, [questionCandidatePool]);
+
+    const selectedQuestionActivities = useMemo(() => {
+        if (!difficulty) return [];
+
+        const targetCount = DIFFICULTY_QUESTION_COUNTS[difficulty];
+        const pool = expandedQuestionPool.length > 0 ? expandedQuestionPool : lessonQuestionActivities;
+        if (pool.length === 0) return [];
+
+        const recentStorageKey = childId && resolvedBranchId
+            ? `recent_questions:${childId}:${resolvedBranchId}`
+            : null;
+        const recentSignatures = readRecentQuestionSignatures(recentStorageKey);
+
+        const ranked = pool
+            .map((question) => ({
+                question,
+                rank: hashString(`${sessionNonce}|${question.id}|${normalizeQuestionText(question.question_text)}`)
+            }))
+            .sort((a, b) => a.rank - b.rank)
+            .map((item) => item.question);
+
+        const unseen = ranked.filter(
+            (question) => !recentSignatures.has(normalizeQuestionText(question.question_text))
+        );
+
+        const selected: any[] = unseen.slice(0, targetCount);
+        if (selected.length < targetCount) {
+            const selectedSignatures = new Set(
+                selected.map((question) => normalizeQuestionText(question.question_text))
+            );
+
+            ranked.forEach((question) => {
+                if (selected.length >= targetCount) return;
+                const signature = normalizeQuestionText(question.question_text);
+                if (selectedSignatures.has(signature)) return;
+                selectedSignatures.add(signature);
+                selected.push(question);
+            });
+        }
+
+        return selected;
+    }, [difficulty, expandedQuestionPool, lessonQuestionActivities, sessionNonce, childId, resolvedBranchId]);
+
+    const lessonActivities = [...infoActivities, ...selectedQuestionActivities];
 
     const handleLessonComplete = async (score: number) => {
         if (!childId || !lessonId || !difficulty) return;
 
-        let xpReward = 100;
-        if (difficulty === 'medium') xpReward = 200;
-        if (difficulty === 'hard') xpReward = 300;
+        const xpReward = difficulty === 'hard' ? 300 : difficulty === 'medium' ? 200 : 100;
 
         const completedAt = new Date().toISOString();
-        const validQuestions = lessonActivities.filter((activity) => activity.type !== 'info').length;
+        const validQuestions = selectedQuestionActivities.length;
         const finalScore = Math.min(score, validQuestions * 10);
+        const recentStorageKey = childId && resolvedBranchId
+            ? `recent_questions:${childId}:${resolvedBranchId}`
+            : null;
+        const completedSignatures = selectedQuestionActivities
+            .map((question) => normalizeQuestionText(question.question_text))
+            .filter(Boolean);
+
+        writeRecentQuestionSignatures(recentStorageKey, completedSignatures);
 
         try {
             const { error: completionError } = await supabase
@@ -181,6 +409,11 @@ export default function LessonPlayer() {
         );
     }
 
+    const startDifficulty = (nextDifficulty: Difficulty) => {
+        setSessionNonce(`${Date.now()}-${Math.random()}`);
+        setDifficulty(nextDifficulty);
+    };
+
     if (!difficulty) {
         return (
             <div className="flex min-h-screen flex-col items-center justify-center bg-brand-blue/5 px-4 py-8">
@@ -199,7 +432,7 @@ export default function LessonPlayer() {
 
                     <div className="grid gap-6 md:grid-cols-3">
                         <button
-                            onClick={() => setDifficulty('easy')}
+                            onClick={() => startDifficulty('easy')}
                             className="group relative flex flex-col items-center overflow-hidden rounded-3xl bg-white p-8 shadow-lg transition-all hover:-translate-y-2 hover:shadow-xl ring-4 ring-transparent hover:ring-green-400"
                         >
                             <div className="mb-4 text-3xl font-bold text-green-600">Rookie</div>
@@ -211,7 +444,7 @@ export default function LessonPlayer() {
                         </button>
 
                         <button
-                            onClick={() => setDifficulty('medium')}
+                            onClick={() => startDifficulty('medium')}
                             className="group relative flex flex-col items-center overflow-hidden rounded-3xl bg-white p-8 shadow-lg transition-all hover:-translate-y-2 hover:shadow-xl ring-4 ring-transparent hover:ring-blue-400"
                         >
                             <div className="mb-4 text-3xl font-bold text-blue-600">Scout</div>
@@ -223,7 +456,7 @@ export default function LessonPlayer() {
                         </button>
 
                         <button
-                            onClick={() => setDifficulty('hard')}
+                            onClick={() => startDifficulty('hard')}
                             className="group relative flex flex-col items-center overflow-hidden rounded-3xl bg-white p-8 shadow-lg transition-all hover:-translate-y-2 hover:shadow-xl ring-4 ring-transparent hover:ring-purple-400"
                         >
                             <div className="mb-4 text-3xl font-bold text-purple-600">Explorer</div>
