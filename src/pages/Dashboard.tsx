@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/useAuth';
 import { supabase } from '../lib/supabase';
 import ChildSelector from '../components/Dashboard/ChildSelector';
 import CreateChildForm from '../components/Dashboard/CreateChildForm';
 import ChildDashboard from '../components/Dashboard/ChildDashboard';
+import OnboardingTutorial, { useOnboardingState } from '../components/common/OnboardingTutorial';
 
 export default function Dashboard() {
     const { familyId, user, loading: authLoading, signOut } = useAuth();
@@ -13,17 +14,9 @@ export default function Dashboard() {
     const [selectedChildId, setSelectedChildId] = useState<string | null>(null);
     const [loadingChildren, setLoadingChildren] = useState(true);
     const [isCreating, setIsCreating] = useState(false);
+    const { showOnboarding, dismissOnboarding } = useOnboardingState();
 
-    useEffect(() => {
-        if (authLoading) {
-            setLoadingChildren(true);
-            return;
-        }
-
-        fetchChildren();
-    }, [familyId, user?.id, authLoading]);
-
-    const fetchChildren = async () => {
+    async function fetchChildren() {
         setLoadingChildren(true);
 
         let familyIds: string[] = [];
@@ -40,7 +33,7 @@ export default function Dashboard() {
                 console.error('Error fetching family memberships:', memberError);
             }
 
-            familyIds = (memberships || []).map((m: any) => m.family_id);
+            familyIds = (memberships || []).map((m: { family_id: string }) => m.family_id);
 
             if (familyIds.length === 0) {
                 const { data: ownedFamilies, error: ownedFamiliesError } = await supabase
@@ -52,7 +45,7 @@ export default function Dashboard() {
                     console.error('Error fetching owned families:', ownedFamiliesError);
                 }
 
-                familyIds = (ownedFamilies || []).map((f: any) => f.id);
+                familyIds = (ownedFamilies || []).map((f: { id: string }) => f.id);
             }
         }
 
@@ -74,7 +67,16 @@ export default function Dashboard() {
             setChildren(data || []);
         }
         setLoadingChildren(false);
-    };
+    }
+
+    useEffect(() => {
+        if (authLoading) {
+            setLoadingChildren(true);
+            return;
+        }
+
+        fetchChildren();
+    }, [familyId, user?.id, authLoading]);
 
     const handleSignOut = async () => {
         await signOut();
@@ -92,6 +94,8 @@ export default function Dashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50">
+            {/* #71 — First-time onboarding tutorial */}
+            {showOnboarding && <OnboardingTutorial onComplete={dismissOnboarding} />}
             <nav className="bg-white shadow">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">

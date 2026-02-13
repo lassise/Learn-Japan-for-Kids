@@ -95,24 +95,11 @@ export default function PracticePlayer() {
         const completedAt = new Date().toISOString();
 
         try {
-            // Update Points
-            const { data: childProfile, error: fetchError } = await supabase
-                .from('child_profiles')
-                .select('total_points')
-                .eq('id', childId)
-                .single();
+            // Secure XP grant via server-side function
+            const { data: newTotal, error: xpError } = await supabase
+                .rpc('grant_xp', { p_child_id: childId, p_xp_amount: xpReward });
 
-            if (fetchError) throw fetchError;
-
-            const currentTotal = childProfile?.total_points || 0;
-            const newTotal = currentTotal + xpReward;
-
-            const { error: updateError } = await supabase
-                .from('child_profiles')
-                .update({ total_points: newTotal })
-                .eq('id', childId);
-
-            if (updateError) throw updateError;
+            if (xpError) throw xpError;
 
             setPracticeStats({
                 score,
@@ -171,6 +158,7 @@ export default function PracticePlayer() {
                 correctCount={practiceStats.correctCount}
                 xpEarned={practiceStats.xpEarned}
                 currentTotalXP={practiceStats.currentTotalXP}
+                childId={childId}
                 onExit={() => navigate('/')}
                 title="Practice Complete!"
                 message="Great job working on your skills!"

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle, Play } from 'lucide-react';
+import LoadingScreen from '../common/LoadingScreen';
 
 interface Lesson {
     id: string;
@@ -32,7 +33,6 @@ export default function CategoryDetail() {
             if (!branchId || !childId) return;
             setLoading(true);
             try {
-                // 1. Fetch Category (Branch) Details
                 const { data: branchData } = await supabase
                     .from('branches')
                     .select('id, name')
@@ -41,7 +41,6 @@ export default function CategoryDetail() {
 
                 if (branchData) setCategory(branchData);
 
-                // 2. Fetch Levels & Lessons for this Branch
                 const { data: levelsData } = await supabase
                     .from('levels')
                     .select(`
@@ -57,7 +56,6 @@ export default function CategoryDetail() {
                     .eq('branch_id', branchId)
                     .order('order_index', { ascending: true });
 
-                // 3. Fetch Completions
                 const { data: completions } = await supabase
                     .from('lesson_completions')
                     .select('lesson_id')
@@ -65,7 +63,6 @@ export default function CategoryDetail() {
 
                 const completedSet = new Set(completions?.map(c => c.lesson_id));
 
-                // 4. Flatten and Process
                 let allLessons: Lesson[] = [];
                 if (levelsData) {
                     levelsData.forEach(level => {
@@ -87,7 +84,6 @@ export default function CategoryDetail() {
 
                 allLessons.sort((a, b) => a.order_index - b.order_index);
 
-                // MODIFIED: Automatically allow all questions/lessons by removing locks
                 const processedLessons = allLessons.map((l) => {
                     return { ...l, isLocked: false };
                 });
@@ -109,7 +105,7 @@ export default function CategoryDetail() {
         navigate(`/lesson/${childId}/${branchId}/${lesson.id}`);
     };
 
-    if (loading) return <div className="p-8 text-center">Loading path...</div>;
+    if (loading) return <LoadingScreen />;
     if (!category) return <div className="p-8 text-center">Category not found</div>;
 
     const completedCount = lessons.filter(l => l.isCompleted).length;
@@ -139,11 +135,27 @@ export default function CategoryDetail() {
             </header>
 
             <main className="mx-auto max-w-3xl px-4 py-8">
+                {/* #35 — Stamp Card for Branch Progress */}
                 <div className="mb-8 overflow-hidden rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-100 text-center">
-                    <div className="mb-2 text-5xl font-bold text-brand-blue">
-                        {completedCount} <span className="text-2xl text-gray-400">/ {lessons.length}</span>
+                    <div className="mb-4">
+                        <span className="text-5xl font-bold text-brand-blue">{completedCount}</span>
+                        <span className="text-2xl text-gray-400"> / {lessons.length}</span>
+                        <p className="text-gray-500 font-bold mt-1">Missions Completed</p>
                     </div>
-                    <p className="text-gray-500 font-bold">Missions Completed</p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                        {lessons.map((l, i) => (
+                            <div
+                                key={l.id}
+                                className={`h-8 w-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-500 ${l.isCompleted
+                                        ? 'bg-green-500 text-white shadow-md scale-110'
+                                        : 'bg-gray-100 text-gray-400'
+                                    }`}
+                                title={l.title}
+                            >
+                                {l.isCompleted ? '✓' : i + 1}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="relative space-y-6 before:absolute before:left-8 before:top-4 before:h-full before:w-1 before:bg-gray-200 before:content-[''] md:before:left-1/2">

@@ -2,37 +2,22 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 
 export default function InternalAdmin() {
-    const [countries, setCountries] = useState<any[]>([]);
+    const [countries, setCountries] = useState<{ id: string, name: string }[]>([]);
     const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null);
-    const [lessons, setLessons] = useState<any[]>([]);
+    const [lessons, setLessons] = useState<{ id: string, title: string, description: string }[]>([]);
     const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
-    const [activities, setActivities] = useState<any[]>([]);
+    const [activities, setActivities] = useState<{ id: string, question_text: string, type: string, options: any }[]>([]);
 
     // Forms
     const [isAddingActivity, setIsAddingActivity] = useState(false);
     const [newActivityQuestion, setNewActivityQuestion] = useState('');
 
-    useEffect(() => {
-        fetchCountries();
-    }, []);
-
-    useEffect(() => {
-        if (selectedCountryId) {
-            fetchLessons(selectedCountryId);
-            setSelectedLessonId(null);
-        }
-    }, [selectedCountryId]);
-
-    useEffect(() => {
-        if (selectedLessonId) fetchActivities(selectedLessonId);
-    }, [selectedLessonId]);
-
-    const fetchCountries = async () => {
+    async function fetchCountries() {
         const { data } = await supabase.from('countries').select('*');
         setCountries(data || []);
-    };
+    }
 
-    const fetchLessons = async (countryId: string) => {
+    async function fetchLessons(countryId: string) {
         // Find v1 version ID for this country
         const { data: v1 } = await supabase
             .from('country_versions')
@@ -58,16 +43,31 @@ export default function InternalAdmin() {
             .order('title');
 
         setLessons(data || []);
-    };
+    }
 
-    const fetchActivities = async (lessonId: string) => {
+    async function fetchActivities(lessonId: string) {
         const { data } = await supabase
             .from('activities')
             .select('*')
             .eq('lesson_id', lessonId)
             .order('order_index');
         setActivities(data || []);
-    };
+    }
+
+    useEffect(() => {
+        fetchCountries();
+    }, []);
+
+    useEffect(() => {
+        if (selectedCountryId) {
+            fetchLessons(selectedCountryId);
+            setSelectedLessonId(null);
+        }
+    }, [selectedCountryId]);
+
+    useEffect(() => {
+        if (selectedLessonId) fetchActivities(selectedLessonId);
+    }, [selectedLessonId]);
 
     const handleAddActivity = async () => {
         if (!selectedLessonId) return;

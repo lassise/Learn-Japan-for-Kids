@@ -51,25 +51,12 @@ export const syncPendingCompletions = async () => {
                     if (error) throw error;
                 }
 
-                // 2. Update XP
+                // 2. Secure XP grant via server-side function
                 if (item.xp_earned > 0) {
-                    const { data: childProfile, error: fetchError } = await supabase
-                        .from('child_profiles')
-                        .select('total_points')
-                        .eq('id', item.child_id)
-                        .single();
+                    const { error: xpError } = await supabase
+                        .rpc('grant_xp', { p_child_id: item.child_id, p_xp_amount: item.xp_earned });
 
-                    if (fetchError) throw fetchError;
-
-                    const currentTotal = childProfile?.total_points || 0;
-                    const newTotal = currentTotal + item.xp_earned;
-
-                    const { error: updateError } = await supabase
-                        .from('child_profiles')
-                        .update({ total_points: newTotal })
-                        .eq('id', item.child_id);
-
-                    if (updateError) throw updateError;
+                    if (xpError) throw xpError;
                 }
 
                 success = true;

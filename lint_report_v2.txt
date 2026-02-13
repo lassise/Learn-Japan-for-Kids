@@ -1,0 +1,194 @@
+
+> triplearn@0.0.0 lint
+> eslint .
+
+
+C:\Dev\Trip\scripts\parse_culture_questions.ts
+  129:5  error  'totalNeeded' is never reassigned. Use 'const' instead  prefer-const
+  129:5  error  'totalNeeded' is assigned a value but never used        @typescript-eslint/no-unused-vars
+
+C:\Dev\Trip\src\components\Dashboard\CategoryDetail.tsx
+  69:21  error  'allLessons' is never reassigned. Use 'const' instead  prefer-const
+  73:55  error  Unexpected any. Specify a different type               @typescript-eslint/no-explicit-any
+
+C:\Dev\Trip\src\components\Dashboard\ChildDashboard.tsx
+  17:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  79:91  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  85:57  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  88:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Dev\Trip\src\components\Dashboard\RewardsDisplay.tsx
+  33:53  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  46:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Dev\Trip\src\components\Dashboard\RewardsDisplay.tsx:46:9
+  44 |
+  45 |     useEffect(() => {
+> 46 |         fetchRewards();
+     |         ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  47 |     }, [childId]);
+  48 |
+  49 |     if (loading) return <div className="h-24 animate-pulse rounded-xl bg-gray-100"></div>;  react-hooks/set-state-in-effect
+  47:8   warning  React Hook useEffect has a missing dependency: 'fetchRewards'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react-hooks/exhaustive-deps
+
+C:\Dev\Trip\src\components\Lesson\LessonEngine.tsx
+  11:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Dev\Trip\src\contexts\AuthContext.tsx
+   9:14  error  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  14:14  error  Fast refresh only works when a file only exports components. Move your React context(s) to a separate file  react-refresh/only-export-components
+  19:44  error  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+
+C:\Dev\Trip\src\pages\Admin\InternalAdmin.tsx
+   5:48  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   7:44  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   9:50  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  16:9   error  Error: Cannot access variable before it is declared
+
+`fetchCountries` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Dev\Trip\src\pages\Admin\InternalAdmin.tsx:16:9
+  14 |
+  15 |     useEffect(() => {
+> 16 |         fetchCountries();
+     |         ^^^^^^^^^^^^^^ `fetchCountries` accessed before it is declared
+  17 |     }, []);
+  18 |
+  19 |     useEffect(() => {
+
+C:\Dev\Trip\src\pages\Admin\InternalAdmin.tsx:30:5
+  28 |     }, [selectedLessonId]);
+  29 |
+> 30 |     async function fetchCountries() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 31 |         const { data } = await supabase.from('countries').select('*');
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 32 |         setCountries(data || []);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 33 |     }
+     | ^^^^^^ `fetchCountries` is declared here
+  34 |
+  35 |     async function fetchLessons(countryId: string) {
+  36 |         // Find v1 version ID for this country                                                                                                                                                                                                                                                                                                                                                              react-hooks/immutability
+  21:13  error  Error: Cannot access variable before it is declared
+
+`fetchLessons` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Dev\Trip\src\pages\Admin\InternalAdmin.tsx:21:13
+  19 |     useEffect(() => {
+  20 |         if (selectedCountryId) {
+> 21 |             fetchLessons(selectedCountryId);
+     |             ^^^^^^^^^^^^ `fetchLessons` accessed before it is declared
+  22 |             setSelectedLessonId(null);
+  23 |         }
+  24 |     }, [selectedCountryId]);
+
+C:\Dev\Trip\src\pages\Admin\InternalAdmin.tsx:35:5
+  33 |     }
+  34 |
+> 35 |     async function fetchLessons(countryId: string) {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 36 |         // Find v1 version ID for this country
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 37 |         const { data: v1 } = await supabase
+     ???
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 60 |         setLessons(data || []);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 61 |     }
+     | ^^^^^^ `fetchLessons` is declared here
+  62 |
+  63 |     async function fetchActivities(lessonId: string) {
+  64 |         const { data } = await supabase                                                                                                                                                                                                                        react-hooks/immutability
+  27:31  error  Error: Cannot access variable before it is declared
+
+`fetchActivities` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Dev\Trip\src\pages\Admin\InternalAdmin.tsx:27:31
+  25 |
+  26 |     useEffect(() => {
+> 27 |         if (selectedLessonId) fetchActivities(selectedLessonId);
+     |                               ^^^^^^^^^^^^^^^ `fetchActivities` accessed before it is declared
+  28 |     }, [selectedLessonId]);
+  29 |
+  30 |     async function fetchCountries() {
+
+C:\Dev\Trip\src\pages\Admin\InternalAdmin.tsx:63:5
+  61 |     }
+  62 |
+> 63 |     async function fetchActivities(lessonId: string) {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 64 |         const { data } = await supabase
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 65 |             .from('activities')
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 66 |             .select('*')
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 67 |             .eq('lesson_id', lessonId)
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 68 |             .order('order_index');
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 69 |         setActivities(data || []);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 70 |     }
+     | ^^^^^^ `fetchActivities` is declared here
+  71 |
+  72 |     const handleAddActivity = async () => {
+  73 |         if (!selectedLessonId) return;  react-hooks/immutability
+
+C:\Dev\Trip\src\pages\Dashboard.tsx
+  12:46  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  23:9   error    Error: Cannot access variable before it is declared
+
+`fetchChildren` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Dev\Trip\src\pages\Dashboard.tsx:23:9
+  21 |         }
+  22 |
+> 23 |         fetchChildren();
+     |         ^^^^^^^^^^^^^ `fetchChildren` accessed before it is declared
+  24 |     }, [familyId, user?.id, authLoading]);
+  25 |
+  26 |     async function fetchChildren() {
+
+C:\Dev\Trip\src\pages\Dashboard.tsx:26:5
+  24 |     }, [familyId, user?.id, authLoading]);
+  25 |
+> 26 |     async function fetchChildren() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 27 |         setLoadingChildren(true);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |
+     ???
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 76 |         setLoadingChildren(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 77 |     };
+     | ^^^^^^ `fetchChildren` is declared here
+  78 |
+  79 |     const handleSignOut = async () => {
+  80 |         await signOut();  react-hooks/immutability
+  24:8   warning  React Hook useEffect has a missing dependency: 'fetchChildren'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps
+  43:53  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  55:59  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+C:\Dev\Trip\src\pages\LessonPlayer.tsx
+  126:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  135:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  185:75  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Dev\Trip\src\pages\ParentAdmin.tsx
+  40:8  warning  React Hook useEffect has a missing dependency: 'fetchProgress'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Dev\Trip\src\pages\PracticePlayer.tsx
+  12:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+??? 31 problems (28 errors, 3 warnings)
+  2 errors and 0 warnings potentially fixable with the `--fix` option.
+

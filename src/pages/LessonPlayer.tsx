@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import LessonCompletion from '../components/Lesson/LessonCompletion';
 import LessonEngine from '../components/Lesson/LessonEngine';
+import LoadingScreen from '../components/common/LoadingScreen';
 import { saveCompletionOffline } from '../lib/syncQueue';
 import { supabase } from '../lib/supabase';
 
@@ -69,7 +70,7 @@ const writeRecentQuestionSignatures = (storageKey: string | null, signatures: st
     }
 };
 
-const buildQuestionVariants = (activity: any): any[] => {
+const buildQuestionVariants = (activity: Activity): Activity[] => {
     const baseQuestion = (activity?.question_text || '').trim();
     if (!baseQuestion) return [];
 
@@ -96,17 +97,16 @@ const buildQuestionVariants = (activity: any): any[] => {
         candidates.push(`Reasoning check: ${baseQuestion}`);
         candidates.push(`What is the best reason? ${withoutQuestionMark}.`);
     } else {
-        candidates.push(`Concept check: ${baseQuestion}`);
-        candidates.push(`Try it another way: ${baseQuestion}`);
+        candidates.push(`Can you answer this: ${baseQuestion}`);
     }
 
-    const seen = new Set<string>();
-    const variants: any[] = [];
+    const seenText = new Set<string>();
+    const variants: Activity[] = [];
 
     candidates.forEach((questionText, index) => {
         const normalized = normalizeQuestionText(questionText);
-        if (!normalized || seen.has(normalized)) return;
-        seen.add(normalized);
+        if (!normalized || seenText.has(normalized)) return;
+        seenText.add(normalized);
 
         variants.push({
             ...activity,
@@ -118,14 +118,33 @@ const buildQuestionVariants = (activity: any): any[] => {
     return variants;
 };
 
+interface Lesson {
+    id: string;
+    title: string;
+    description: string;
+    level_id: string;
+    content_json?: any;
+    order_index: number;
+}
+
+interface Activity {
+    id: string;
+    lesson_id: string;
+    type: 'multiple_choice' | 'image_choice' | 'map_click' | 'scenario' | 'flashcard' | 'info';
+    question_text: string;
+    options: any;
+    order_index: number;
+    difficulty: number;
+}
+
 export default function LessonPlayer() {
     const { childId, lessonId, branchId: routeBranchId } = useParams();
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
-    const [lesson, setLesson] = useState<any>(null);
-    const [activities, setActivities] = useState<any[]>([]);
-    const [branchQuestionPool, setBranchQuestionPool] = useState<any[]>([]);
+    const [lesson, setLesson] = useState<Lesson | null>(null);
+    const [activities, setActivities] = useState<Activity[]>([]);
+    const [branchQuestionPool, setBranchQuestionPool] = useState<Activity[]>([]);
     const [resolvedBranchId, setResolvedBranchId] = useState<string | null>(routeBranchId ?? null);
     const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
     const [sessionNonce, setSessionNonce] = useState(() => `${Date.now()}-${Math.random()}`);
@@ -140,7 +159,7 @@ export default function LessonPlayer() {
     } | null>(null);
 
     useEffect(() => {
-        const fetchLessonData = async () => {
+        async function fetchLessonData() {
             if (!lessonId) {
                 setLoading(false);
                 return;
@@ -149,71 +168,51 @@ export default function LessonPlayer() {
             setLoading(true);
 
             try {
-                const { data: lessonData } = await supabase
+                // 1. Fetch Lesson & Level info in parallel
+                const { data: lessonData, error: lessonError } = await supabase
                     .from('lessons')
-                    .select('*')
+                    .select('*, levels(branch_id)')
                     .eq('id', lessonId)
                     .single();
-                setLesson(lessonData);
 
-                let effectiveBranchId = routeBranchId ?? null;
-                if (!effectiveBranchId && lessonData?.level_id) {
-                    const { data: levelData } = await supabase
-                        .from('levels')
-                        .select('branch_id')
-                        .eq('id', lessonData.level_id)
-                        .single();
-
-                    if (levelData?.branch_id) {
-                        effectiveBranchId = levelData.branch_id;
-                    }
+                if (lessonError || !lessonData) {
+                    console.error('Error fetching lesson:', lessonError);
+                    setLoading(false);
+                    return;
                 }
 
+                setLesson(lessonData as Lesson);
+                const effectiveBranchId = routeBranchId ?? (lessonData as any).levels?.branch_id;
                 setResolvedBranchId(effectiveBranchId);
 
-                const { data: activitiesData } = await supabase
-                    .from('activities')
-                    .select('*')
-                    .eq('lesson_id', lessonId)
-                    .order('order_index', { ascending: true });
+                // 2. Fetch current activities and branch pool in parallel
+                const [activitiesResult, branchActivitiesResult] = await Promise.all([
+                    supabase
+                        .from('activities')
+                        .select('*')
+                        .eq('lesson_id', lessonId)
+                        .order('order_index', { ascending: true }),
+                    effectiveBranchId ? (
+                        supabase
+                            .from('activities')
+                            .select('*, lessons!inner(levels!inner(branch_id))')
+                            .eq('lessons.levels.branch_id', effectiveBranchId)
+                            .eq('type', 'multiple_choice')
+                    ) : Promise.resolve({ data: [], error: null })
+                ]);
 
-                setActivities(activitiesData || []);
+                if (activitiesResult.error) console.error('Error fetching activities:', activitiesResult.error);
+                if (branchActivitiesResult.error) console.error('Error fetching pool:', branchActivitiesResult.error);
 
-                if (effectiveBranchId) {
-                    const { data: levelRows } = await supabase
-                        .from('levels')
-                        .select('id')
-                        .eq('branch_id', effectiveBranchId);
+                setActivities((activitiesResult.data as Activity[]) || []);
+                setBranchQuestionPool((branchActivitiesResult.data as Activity[]) || []);
 
-                    const levelIds = (levelRows || []).map((level) => level.id);
-                    if (levelIds.length === 0) {
-                        setBranchQuestionPool([]);
-                    } else {
-                        const { data: lessonRows } = await supabase
-                            .from('lessons')
-                            .select('id')
-                            .in('level_id', levelIds);
-
-                        const branchLessonIds = (lessonRows || []).map((row) => row.id);
-                        if (branchLessonIds.length === 0) {
-                            setBranchQuestionPool([]);
-                        } else {
-                            const { data: branchActivities } = await supabase
-                                .from('activities')
-                                .select('*')
-                                .in('lesson_id', branchLessonIds)
-                                .eq('type', 'multiple_choice');
-
-                            setBranchQuestionPool(branchActivities || []);
-                        }
-                    }
-                } else {
-                    setBranchQuestionPool([]);
-                }
+            } catch (err) {
+                console.error('Error in fetchLessonData:', err);
             } finally {
                 setLoading(false);
             }
-        };
+        }
 
         fetchLessonData();
     }, [lessonId, routeBranchId]);
@@ -233,7 +232,7 @@ export default function LessonPlayer() {
 
     const questionCandidatePool = useMemo(() => {
         const merged = [...lessonQuestionActivities, ...branchQuestionPool];
-        const unique = new Map<string, any>();
+        const unique = new Map<string, Activity>();
 
         merged.forEach((question) => {
             const signature = normalizeQuestionText(question.question_text);
@@ -246,7 +245,7 @@ export default function LessonPlayer() {
 
     const expandedQuestionPool = useMemo(() => {
         const seen = new Set<string>();
-        const expanded: any[] = [];
+        const expanded: Activity[] = [];
 
         questionCandidatePool.forEach((question) => {
             buildQuestionVariants(question).forEach((variant) => {
@@ -284,7 +283,7 @@ export default function LessonPlayer() {
             (question) => !recentSignatures.has(normalizeQuestionText(question.question_text))
         );
 
-        const selected: any[] = unseen.slice(0, targetCount);
+        const selected: Activity[] = unseen.slice(0, targetCount);
         if (selected.length < targetCount) {
             const selectedSignatures = new Set(
                 selected.map((question) => normalizeQuestionText(question.question_text))
@@ -302,16 +301,56 @@ export default function LessonPlayer() {
         return selected;
     }, [difficulty, expandedQuestionPool, lessonQuestionActivities, sessionNonce, childId, resolvedBranchId]);
 
-    const lessonActivities = [...infoActivities, ...selectedQuestionActivities];
+    // Interleave info cards between question chunks based on order_index.
+    // Info cards appear at their natural positions relative to questions,
+    // creating a teach → quiz → teach → quiz flow.
+    const lessonActivities = useMemo(() => {
+        if (infoActivities.length === 0) return selectedQuestionActivities;
+        if (selectedQuestionActivities.length === 0) return infoActivities;
 
-    const handleLessonComplete = async (score: number) => {
+        // Sort selected questions by their original order_index
+        const sortedQuestions = [...selectedQuestionActivities].sort(
+            (a, b) => a.order_index - b.order_index
+        );
+
+        // Merge info and questions by order_index to preserve the teach→quiz flow
+        const merged: Activity[] = [];
+        let qIdx = 0;
+        let iIdx = 0;
+
+        while (qIdx < sortedQuestions.length || iIdx < infoActivities.length) {
+            // Insert any info cards that should come before the next question
+            while (
+                iIdx < infoActivities.length &&
+                (qIdx >= sortedQuestions.length ||
+                    infoActivities[iIdx].order_index <= sortedQuestions[qIdx].order_index)
+            ) {
+                merged.push(infoActivities[iIdx]);
+                iIdx++;
+            }
+            // Insert the next question
+            if (qIdx < sortedQuestions.length) {
+                merged.push(sortedQuestions[qIdx]);
+                qIdx++;
+            }
+        }
+
+        return merged;
+    }, [infoActivities, selectedQuestionActivities]);
+
+    const handleLessonComplete = async (score: number, _wrongIds?: string[]) => {
         if (!childId || !lessonId || !difficulty) return;
 
-        const xpReward = difficulty === 'hard' ? 300 : difficulty === 'medium' ? 200 : 100;
+        const baseXpReward = difficulty === 'hard' ? 300 : difficulty === 'medium' ? 200 : 100;
 
         const completedAt = new Date().toISOString();
         const validQuestions = selectedQuestionActivities.length;
         const finalScore = Math.min(score, validQuestions * 10);
+
+        // #58 — 2x XP bonus for perfect score!
+        const isPerfect = finalScore === validQuestions * 10;
+        const xpReward = isPerfect ? baseXpReward * 2 : baseXpReward;
+
         const recentStorageKey = childId && resolvedBranchId
             ? `recent_questions:${childId}:${resolvedBranchId}`
             : null;
@@ -335,23 +374,11 @@ export default function LessonPlayer() {
 
             if (completionError) throw completionError;
 
-            const { data: childProfile, error: fetchError } = await supabase
-                .from('child_profiles')
-                .select('total_points')
-                .eq('id', childId)
-                .single();
+            // Secure XP grant via server-side function (prevents manipulation & race conditions)
+            const { data: newTotal, error: xpError } = await supabase
+                .rpc('grant_xp', { p_child_id: childId, p_xp_amount: xpReward });
 
-            if (fetchError) throw fetchError;
-
-            const currentTotal = childProfile?.total_points || 0;
-            const newTotal = currentTotal + xpReward;
-
-            const { error: updateError } = await supabase
-                .from('child_profiles')
-                .update({ total_points: newTotal })
-                .eq('id', childId);
-
-            if (updateError) throw updateError;
+            if (xpError) throw xpError;
 
             setCompletionStats({
                 score: finalScore,
@@ -361,7 +388,7 @@ export default function LessonPlayer() {
                 totalQuestions: validQuestions
             });
             setIsComplete(true);
-        } catch (error) {
+        } catch {
             await saveCompletionOffline({
                 child_id: childId,
                 lesson_id: lessonId,
@@ -383,11 +410,7 @@ export default function LessonPlayer() {
     };
 
     if (loading) {
-        return (
-            <div className="flex min-h-screen items-center justify-center bg-brand-blue/5">
-                <div className="animate-bounce text-2xl font-bold text-brand-blue">Loading Mission...</div>
-            </div>
-        );
+        return <LoadingScreen />;
     }
 
     if (!lesson) return <div>Lesson not found</div>;
@@ -404,7 +427,14 @@ export default function LessonPlayer() {
                 correctCount={completionStats.correctCount}
                 xpEarned={completionStats.xpEarned}
                 currentTotalXP={completionStats.currentTotalXP}
+                childId={childId}
                 onExit={() => navigate(returnPath)}
+                onRetry={() => {
+                    // #10 — Retry: reset and play again
+                    setIsComplete(false);
+                    setCompletionStats(null);
+                    setSessionNonce(`${Date.now()}-${Math.random()}`);
+                }}
             />
         );
     }
