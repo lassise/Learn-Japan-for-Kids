@@ -1,4 +1,5 @@
 import ImageWithFallback from '../../common/ImageWithFallback';
+import SpeakButton from '../../common/SpeakButton';
 
 interface InfoSlideProps {
     title?: string;
@@ -26,8 +27,11 @@ export default function InfoSlide({ title, content, mediaUrl, onContinue }: Info
 
             {/* Content Bubble */}
             <div className="rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-100">
-                <div className="prose prose-lg prose-blue text-xl leading-relaxed text-gray-700">
-                    <p>{content}</p>
+                <div className="flex items-start gap-3">
+                    <div className="prose prose-lg prose-blue text-xl leading-relaxed text-gray-700 flex-1">
+                        <p>{content}</p>
+                    </div>
+                    <SpeakButton text={content} size="md" />
                 </div>
             </div>
 

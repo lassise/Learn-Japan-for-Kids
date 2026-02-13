@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import confetti from 'canvas-confetti';
 import ImageWithFallback from '../../common/ImageWithFallback';
+import SpeakButton from '../../common/SpeakButton';
 
 const CORRECT_MESSAGES = [
     "Great Job!", "Awesome!", "You nailed it!", "Super smart!",
@@ -88,7 +89,10 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
     return (
         <div className="flex flex-col space-y-6">
             {/* Question Header */}
-            <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">{question}</h2>
+            <div className="flex items-start gap-3">
+                <h2 className="text-2xl font-bold text-gray-900 md:text-3xl flex-1">{question}</h2>
+                <SpeakButton text={question} size="md" />
+            </div>
 
             {/* Media Context */}
             {mediaUrl && (
@@ -162,9 +166,12 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
                             <p className={clsx("text-lg font-bold", shuffledOptions.find(o => o.id === selectedId)?.is_correct ? "text-green-800" : "text-orange-800")}>
                                 {shuffledOptions.find(o => o.id === selectedId)?.is_correct ? pickRandom(CORRECT_MESSAGES) : pickRandom(WRONG_MESSAGES)}
                             </p>
-                            <p className="mt-1 text-lg text-gray-700 leading-relaxed">
-                                {shuffledOptions.find(o => o.id === selectedId)?.explanation || "Keep going!"}
-                            </p>
+                            <div className="mt-1 flex items-start gap-2">
+                                <p className="text-lg text-gray-700 leading-relaxed flex-1">
+                                    {shuffledOptions.find(o => o.id === selectedId)?.explanation || "Keep going!"}
+                                </p>
+                                <SpeakButton text={shuffledOptions.find(o => o.id === selectedId)?.explanation || "Keep going!"} />
+                            </div>
                         </div>
                     </div>
                 </div>
