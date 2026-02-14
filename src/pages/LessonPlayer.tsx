@@ -97,7 +97,7 @@ const buildQuestionVariants = (activity: Activity): Activity[] => {
         candidates.push(`Reasoning check: ${baseQuestion}`);
         candidates.push(`What is the best reason? ${withoutQuestionMark}.`);
     } else {
-        candidates.push(`Can you answer this: ${baseQuestion}`);
+        // No variant for default case anymore
     }
 
     const seenText = new Set<string>();

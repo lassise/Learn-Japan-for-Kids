@@ -10,33 +10,35 @@ interface InfoSlideProps {
 
 export default function InfoSlide({ title, content, mediaUrl, onContinue }: InfoSlideProps) {
     return (
-        <div className="flex flex-col space-y-6">
-            {/* Title with fun color */}
-            {title && <h2 className="text-3xl font-bold text-brand-blue md:text-4xl">{title}</h2>}
+        <div className="flex flex-col min-h-[500px] justify-between space-y-6">
+            <div className="space-y-6">
+                {/* Title with fun color */}
+                {title && <h2 className="text-3xl font-bold text-brand-blue md:text-4xl">{title}</h2>}
 
-            {/* Media with rounded styles */}
-            {mediaUrl && (
-                <div className="overflow-hidden rounded-3xl shadow-lg ring-4 ring-white">
-                    <ImageWithFallback
-                        src={mediaUrl}
-                        description={title || "Lesson Image"}
-                        className="h-64 w-full object-cover transition-transform duration-700 hover:scale-105"
-                    />
-                </div>
-            )}
-
-            {/* Content Bubble */}
-            <div className="rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-100">
-                <div className="flex items-start gap-3">
-                    <div className="prose prose-lg prose-blue text-xl leading-relaxed text-gray-700 flex-1">
-                        <p>{content}</p>
+                {/* Media with rounded styles - added max-height to keep button visible */}
+                {mediaUrl && (
+                    <div className="overflow-hidden rounded-3xl shadow-lg ring-4 ring-white">
+                        <ImageWithFallback
+                            src={mediaUrl}
+                            description={title || "Lesson Image"}
+                            className="h-48 md:h-64 w-full object-cover transition-transform duration-700 hover:scale-105"
+                        />
                     </div>
-                    <SpeakButton text={content} size="md" />
+                )}
+
+                {/* Content Bubble */}
+                <div className="rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-100">
+                    <div className="flex items-start gap-3">
+                        <div className="prose prose-lg prose-blue text-xl leading-relaxed text-gray-700 flex-1">
+                            <p>{content}</p>
+                        </div>
+                        <SpeakButton text={content} size="md" />
+                    </div>
                 </div>
             </div>
 
-            {/* Large Continue Button */}
-            <div className="mt-8 flex justify-end">
+            {/* Large Continue Button - ensuring it has margin-top for visibility */}
+            <div className="mt-auto pt-8 flex justify-end">
                 <button
                     onClick={onContinue}
                     className="transform rounded-full bg-brand-yellow px-10 py-4 text-xl font-bold text-gray-900 shadow-xl transition-all hover:-translate-y-1 hover:bg-yellow-400 active:translate-y-0"
