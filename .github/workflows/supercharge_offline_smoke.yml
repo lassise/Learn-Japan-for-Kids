@@ -1,0 +1,197 @@
+name: supercharge-offline-smoke
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  schedule:
+    - cron: '30 7 * * *'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  offline-online-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build App
+        run: npm run build
+
+      - name: Install Playwright Browser
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run Browser Offline/Online Smoke
+        env:
+          SMOKE_BROWSER: ${{ matrix.browser }}
+          SMOKE_ARTIFACT_DIR: artifacts/smoke/${{ matrix.browser }}
+        run: npm run smoke:offline-online
+
+      - name: Upload Smoke Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supercharge-smoke-${{ matrix.browser }}
+          path: artifacts/smoke/${{ matrix.browser }}
+          if-no-files-found: warn
+          retention-days: 14
+
+  triage-smoke-failures:
+    runs-on: ubuntu-latest
+    if: always() && github.event_name == 'pull_request'
+    needs: [offline-online-smoke]
+    steps:
+      - name: Apply or Clear Triage Label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labelName = 'triage:supercharge-smoke-fail';
+            const prNumber = context.payload.pull_request.number;
+            const failed = '${{ needs.offline-online-smoke.result }}' !== 'success';
+
+            if (failed) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: [labelName]
+              });
+              core.info(`Applied label ${labelName} to PR #${prNumber}`);
+              return;
+            }
+
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                name: labelName
+              });
+              core.info(`Removed label ${labelName} from PR #${prNumber}`);
+            } catch (error) {
+              if (error.status === 404) {
+                core.info(`Label ${labelName} not present on PR #${prNumber}`);
+                return;
+              }
+              throw error;
+            }
+
+  comment-smoke-summary:
+    runs-on: ubuntu-latest
+    if: always() && github.event_name == 'pull_request'
+    needs: [offline-online-smoke]
+    steps:
+      - name: Download Smoke Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: supercharge-smoke-*
+          path: artifacts/smoke-results
+          merge-multiple: false
+
+      - name: Comment Smoke Summary
+        uses: actions/github-script@v7
+        env:
+          OFFLINE_SMOKE_RESULT: ${{ needs.offline-online-smoke.result }}
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const marker = '<!-- supercharge-smoke-summary -->';
+            const root = path.resolve('artifacts/smoke-results');
+            const rows = [];
+
+            const collectSummaryFiles = (dir) => {
+              if (!fs.existsSync(dir)) return [];
+              const output = [];
+              for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+                const next = path.join(dir, entry.name);
+                if (entry.isDirectory()) {
+                  output.push(...collectSummaryFiles(next));
+                } else if (entry.isFile() && entry.name.endsWith('-summary.json')) {
+                  output.push(next);
+                }
+              }
+              return output;
+            };
+
+            const summaryFiles = collectSummaryFiles(root);
+            for (const file of summaryFiles) {
+              try {
+                const parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
+                const browser = parsed.browser || path.basename(file).replace('-summary.json', '');
+                rows.push({
+                  browser,
+                  status: parsed.status || 'unknown',
+                  details: parsed.details || '',
+                  file: path.relative(root, file)
+                });
+              } catch (error) {
+                rows.push({
+                  browser: path.basename(file),
+                  status: 'parse_error',
+                  details: error.message,
+                  file: path.relative(root, file)
+                });
+              }
+            }
+
+            rows.sort((a, b) => a.browser.localeCompare(b.browser));
+            const tableRows = rows.length > 0
+              ? rows.map((row) => `| ${row.browser} | ${row.status} | ${String(row.details).replace(/\n/g, ' ').slice(0, 180)} |`).join('\n')
+              : '| n/a | missing | No summary artifacts found |';
+            const body = `${marker}
+            ## Supercharge Smoke Summary
+
+            Workflow result: **${process.env.OFFLINE_SMOKE_RESULT || 'unknown'}**
+
+            | Browser | Status | Details |
+            | --- | --- | --- |
+            ${tableRows}
+
+            Artifacts root: \`artifacts/smoke-results\``;
+
+            const prNumber = context.payload.pull_request.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber
+            });
+            const existing = comments.find((comment) =>
+              comment.user.type === 'Bot' && comment.body && comment.body.includes(marker)
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body
+              });
+              core.info('Updated existing smoke summary comment.');
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body
+              });
+              core.info('Created smoke summary comment.');
+            }

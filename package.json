@@ -7,7 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:supercharge": "node scripts/run_supercharge_checks.cjs",
+    "smoke:offline-online": "node scripts/run_offline_online_smoke_ci.cjs",
+    "smoke:offline-online:browser": "node scripts/browser_offline_online_smoke.cjs",
+    "benchmark:supercharge-rpc": "node scripts/rpc_benchmark_supercharge.cjs",
+    "maintenance:retention": "node scripts/run_retention_maintenance.cjs",
+    "lint:cultural-facts": "node scripts/lint_cultural_facts.cjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",

@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Volume2 } from 'lucide-react';
+import { readActiveSpeechPreferences, type TtsRatePreset } from '../../lib/supercharge/childPreferences';
 
 interface SpeakButtonProps {
     text: string;
@@ -8,17 +9,34 @@ interface SpeakButtonProps {
     size?: 'sm' | 'md';
     className?: string;
     label?: string;
+    autoReadOnMount?: boolean;
+    rateOverride?: number;
 }
 
-export default function SpeakButton({ text, lang = 'en-US', size = 'sm', className = '', label }: SpeakButtonProps) {
+const getRateByPreset = (preset: TtsRatePreset) => {
+    if (preset === 'slow') return 0.78;
+    if (preset === 'clear') return 0.86;
+    return 0.95;
+};
+
+export default function SpeakButton({
+    text,
+    lang = 'en-US',
+    size = 'sm',
+    className = '',
+    label,
+    autoReadOnMount = false,
+    rateOverride
+}: SpeakButtonProps) {
     const [speaking, setSpeaking] = useState(false);
     const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+    const lastAutoReadKeyRef = useRef<string>('');
 
-    const speak = useCallback(() => {
+    const speak = useCallback((force = false) => {
         if (!('speechSynthesis' in window)) return;
 
         // If already speaking this text, stop it
-        if (speaking) {
+        if (speaking && !force) {
             window.speechSynthesis.cancel();
             setSpeaking(false);
             return;
@@ -29,7 +47,11 @@ export default function SpeakButton({ text, lang = 'en-US', size = 'sm', classNa
 
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = lang;
-        utterance.rate = 0.9;
+        const activePrefs = readActiveSpeechPreferences();
+        const resolvedRate = typeof rateOverride === 'number' && Number.isFinite(rateOverride)
+            ? Math.max(0.5, Math.min(1.5, rateOverride))
+            : getRateByPreset(activePrefs.ttsRatePreset);
+        utterance.rate = resolvedRate;
         utterance.pitch = 1.1;
         utterance.onend = () => setSpeaking(false);
         utterance.onerror = () => setSpeaking(false);
@@ -37,7 +59,21 @@ export default function SpeakButton({ text, lang = 'en-US', size = 'sm', classNa
 
         setSpeaking(true);
         window.speechSynthesis.speak(utterance);
-    }, [text, lang, speaking]);
+    }, [text, lang, speaking, rateOverride]);
+
+    useEffect(() => {
+        if (!autoReadOnMount) return;
+        if (!('speechSynthesis' in window)) return;
+
+        const activePrefs = readActiveSpeechPreferences();
+        if (!activePrefs.ttsAutoRead) return;
+
+        const autoReadKey = `${text}:${lang}`;
+        if (lastAutoReadKeyRef.current === autoReadKey) return;
+        lastAutoReadKeyRef.current = autoReadKey;
+
+        speak(true);
+    }, [autoReadOnMount, text, lang, speak]);
 
     // Cleanup on unmount or when text changes
     useEffect(() => {
@@ -58,7 +94,7 @@ export default function SpeakButton({ text, lang = 'en-US', size = 'sm', classNa
 
     return (
         <button
-            onClick={speak}
+            onClick={() => speak()}
             type="button"
             aria-label={label || `Read aloud: ${text.slice(0, 30)}`}
             title="Read aloud"

@@ -38,4 +38,38 @@
       color: #e2e8f0;
     }
   }
+
+  html.supercharge-reduce-motion *,
+  html.supercharge-reduce-motion *::before,
+  html.supercharge-reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.supercharge-high-contrast body {
+    background-color: #ffffff;
+    color: #0f172a;
+    background-image: none;
+  }
+
+  html.supercharge-high-contrast a,
+  html.supercharge-high-contrast button {
+    outline: 2px solid #0f172a;
+    outline-offset: 1px;
+  }
+
+  html.supercharge-dyslexia-font body,
+  html.supercharge-dyslexia-font p,
+  html.supercharge-dyslexia-font span,
+  html.supercharge-dyslexia-font li {
+    font-family: "Verdana", "Tahoma", "Arial", sans-serif !important;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+
+  .textShadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 }

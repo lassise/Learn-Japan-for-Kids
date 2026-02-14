@@ -9,18 +9,24 @@ import { supabase } from '../lib/supabase';
 type Difficulty = 'easy' | 'medium' | 'hard';
 
 const DIFFICULTY_QUESTION_COUNTS: Record<Difficulty, number> = {
-    easy: 10,
-    medium: 20,
-    hard: 30
+    easy: 5,
+    medium: 10,
+    hard: 15
 };
 
 const RECENT_QUESTION_LIMIT = 180;
+const QUESTIONS_PER_READING_BLOCK = 3;
 
-const normalizeQuestionText = (text: string | null | undefined) =>
-    (text || '')
+const normalizeQuestionText = (text: string | null | undefined) => {
+    if (!text) return '';
+    const parts = text.split('\n\n');
+    const mainText = parts[parts.length - 1];
+    return mainText
         .toLowerCase()
         .replace(/\s+/g, ' ')
+        .replace(/[?.!]$/, '')
         .trim();
+};
 
 const hashString = (value: string) => {
     let hash = 0;
@@ -74,31 +80,8 @@ const buildQuestionVariants = (activity: Activity): Activity[] => {
     const baseQuestion = (activity?.question_text || '').trim();
     if (!baseQuestion) return [];
 
-    const withoutQuestionMark = baseQuestion.replace(/\?$/, '');
-    const lowerBase = baseQuestion.toLowerCase();
     const candidates: string[] = [baseQuestion];
-
-    if (lowerBase.startsWith('what is ')) {
-        const subject = withoutQuestionMark.replace(/^what is /i, '').trim();
-        candidates.push(`Which choice best describes ${subject}?`);
-        candidates.push(`${subject} is best described as which option?`);
-    } else if (lowerBase.startsWith('what are ')) {
-        const subject = withoutQuestionMark.replace(/^what are /i, '').trim();
-        candidates.push(`Which choice best describes ${subject}?`);
-        candidates.push(`${subject} are best described as which option?`);
-    } else if (lowerBase.startsWith('is ')) {
-        const statement = withoutQuestionMark.replace(/^is /i, '').trim();
-        candidates.push(`True or false: ${statement}.`);
-        candidates.push(`Check your understanding: ${statement}. Is this true?`);
-    } else if (lowerBase.startsWith('when ')) {
-        candidates.push(`Time check: ${withoutQuestionMark}.`);
-        candidates.push(`Choose the best time: ${baseQuestion}`);
-    } else if (lowerBase.startsWith('why ')) {
-        candidates.push(`Reasoning check: ${baseQuestion}`);
-        candidates.push(`What is the best reason? ${withoutQuestionMark}.`);
-    } else {
-        // No variant for default case anymore
-    }
+    // Removed reasoning prefixes here to keep pool clean
 
     const seenText = new Set<string>();
     const variants: Activity[] = [];
@@ -118,6 +101,29 @@ const buildQuestionVariants = (activity: Activity): Activity[] => {
     return variants;
 };
 
+const LOW_SIGNAL_INFO_PATTERNS = [
+    /\bintro\b/i,
+    /\bwelcome\b/i,
+    /\bstart\b/i,
+    /\bready\b/i,
+    /\blet'?s\b/i,
+    /\blesson\s*\d+\s*intro\b/i
+];
+
+const isLowSignalInfoCard = (activity: Activity) => {
+    if (activity.type !== 'info') return false;
+    const raw = `${activity.question_text || ''} ${activity.content || ''}`
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+    if (!raw) return true;
+
+    const wordCount = raw.split(' ').filter(Boolean).length;
+    const hasIntroPattern = LOW_SIGNAL_INFO_PATTERNS.some((pattern) => pattern.test(raw));
+
+    return wordCount <= 10 || hasIntroPattern;
+};
+
 interface Lesson {
     id: string;
     title: string;
@@ -135,6 +141,8 @@ interface Activity {
     options: any;
     order_index: number;
     difficulty: number;
+    content?: string;
+    media_url?: string;
 }
 
 export default function LessonPlayer() {
@@ -263,15 +271,33 @@ export default function LessonPlayer() {
         if (!difficulty) return [];
 
         const targetCount = DIFFICULTY_QUESTION_COUNTS[difficulty];
-        const pool = expandedQuestionPool.length > 0 ? expandedQuestionPool : lessonQuestionActivities;
-        if (pool.length === 0) return [];
 
+        // 1. Deduplicate lesson activities by signature first (to handle DB duplicates)
+        const uniqueLessonActivities: Activity[] = [];
+        const internalSeen = new Set<string>();
+
+        [...lessonQuestionActivities]
+            .sort((a, b) => a.order_index - b.order_index)
+            .forEach(activity => {
+                const sig = normalizeQuestionText(activity.question_text);
+                if (sig && !internalSeen.has(sig)) {
+                    internalSeen.add(sig);
+                    uniqueLessonActivities.push(activity);
+                }
+            });
+
+        // 2. Take additional candidates from the pool
+        const pool = expandedQuestionPool.length > 0 ? expandedQuestionPool : lessonQuestionActivities;
         const recentStorageKey = childId && resolvedBranchId
             ? `recent_questions:${childId}:${resolvedBranchId}`
             : null;
         const recentSignatures = readRecentQuestionSignatures(recentStorageKey);
 
         const ranked = pool
+            .filter((q) => {
+                const sig = normalizeQuestionText(q.question_text);
+                return sig && !internalSeen.has(sig);
+            })
             .map((question) => ({
                 question,
                 rank: hashString(`${sessionNonce}|${question.id}|${normalizeQuestionText(question.question_text)}`)
@@ -283,73 +309,98 @@ export default function LessonPlayer() {
             (question) => !recentSignatures.has(normalizeQuestionText(question.question_text))
         );
 
-        const selected: Activity[] = unseen.slice(0, targetCount);
-        if (selected.length < targetCount) {
-            const selectedSignatures = new Set(
-                selected.map((question) => normalizeQuestionText(question.question_text))
-            );
+        // Build final list: Lesson Question + (Unseen Pool) + (Seen Pool)
+        const selected: Activity[] = [...uniqueLessonActivities];
 
-            ranked.forEach((question) => {
-                if (selected.length >= targetCount) return;
-                const signature = normalizeQuestionText(question.question_text);
-                if (selectedSignatures.has(signature)) return;
-                selectedSignatures.add(signature);
-                selected.push(question);
+        // Fill from pool if targetCount isn't reached
+        unseen.forEach(q => {
+            if (selected.length < targetCount) {
+                const sig = normalizeQuestionText(q.question_text);
+                if (!selected.some(s => normalizeQuestionText(s.question_text) === sig)) {
+                    selected.push(q);
+                }
+            }
+        });
+
+        if (selected.length < targetCount) {
+            ranked.forEach(q => {
+                if (selected.length < targetCount) {
+                    const sig = normalizeQuestionText(q.question_text);
+                    if (!selected.some(s => normalizeQuestionText(s.question_text) === sig)) {
+                        selected.push(q);
+                    }
+                }
             });
         }
 
-        return selected;
+        return selected.slice(0, targetCount);
     }, [difficulty, expandedQuestionPool, lessonQuestionActivities, sessionNonce, childId, resolvedBranchId]);
 
-    // Interleave info cards between question chunks based on order_index.
-    // Info cards appear at their natural positions relative to questions,
-    // creating a teach → quiz → teach → quiz flow.
+    // Keep lessons in short read-then-question blocks to avoid long reading-only stretches.
     const lessonActivities = useMemo(() => {
         if (infoActivities.length === 0) return selectedQuestionActivities;
         if (selectedQuestionActivities.length === 0) return infoActivities;
 
-        // Sort selected questions by their original order_index
         const sortedQuestions = [...selectedQuestionActivities].sort(
             (a, b) => a.order_index - b.order_index
         );
 
-        // Merge info and questions by order_index to preserve the teach→quiz flow
-        const merged: Activity[] = [];
-        let qIdx = 0;
-        let iIdx = 0;
+        const infoBudget = Math.max(1, Math.ceil(sortedQuestions.length / QUESTIONS_PER_READING_BLOCK));
+        const queuedInfo = infoActivities.slice(0, infoBudget);
+        const balanced: Activity[] = [];
+        let questionIndex = 0;
+        let infoIndex = 0;
 
-        while (qIdx < sortedQuestions.length || iIdx < infoActivities.length) {
-            // Insert any info cards that should come before the next question
-            while (
-                iIdx < infoActivities.length &&
-                (qIdx >= sortedQuestions.length ||
-                    infoActivities[iIdx].order_index <= sortedQuestions[qIdx].order_index)
-            ) {
-                merged.push(infoActivities[iIdx]);
-                iIdx++;
+        if (queuedInfo.length > 0) {
+            balanced.push(queuedInfo[infoIndex]);
+            infoIndex += 1;
+        }
+
+        while (questionIndex < sortedQuestions.length) {
+            let batchCount = 0;
+            while (questionIndex < sortedQuestions.length && batchCount < QUESTIONS_PER_READING_BLOCK) {
+                balanced.push(sortedQuestions[questionIndex]);
+                questionIndex += 1;
+                batchCount += 1;
             }
-            // Insert the next question
-            if (qIdx < sortedQuestions.length) {
-                merged.push(sortedQuestions[qIdx]);
-                qIdx++;
+
+            if (infoIndex < queuedInfo.length && questionIndex < sortedQuestions.length) {
+                balanced.push(queuedInfo[infoIndex]);
+                infoIndex += 1;
             }
         }
 
-        return merged;
+        const firstQuestionIndex = balanced.findIndex((activity) => activity.type !== 'info');
+        if (firstQuestionIndex <= 0) {
+            return balanced;
+        }
+
+        const leadingInfoCards = balanced.slice(0, firstQuestionIndex);
+        const lowSignalLeadCards = leadingInfoCards.filter(isLowSignalInfoCard);
+
+        if (lowSignalLeadCards.length === 0) {
+            return balanced;
+        }
+
+        const keptLeadCards = leadingInfoCards.filter((activity) => !isLowSignalInfoCard(activity));
+        const questionAndTail = balanced.slice(firstQuestionIndex);
+        const [firstQuestion, ...tail] = questionAndTail;
+        if (!firstQuestion) return balanced;
+
+        return [...keptLeadCards, firstQuestion, ...lowSignalLeadCards, ...tail];
     }, [infoActivities, selectedQuestionActivities]);
 
-    const handleLessonComplete = async (score: number, _wrongIds?: string[]) => {
+    const handleLessonComplete = async (score: number, correctCountParam: number) => {
         if (!childId || !lessonId || !difficulty) return;
 
+        const finalCorrectCount = typeof correctCountParam === 'number' ? correctCountParam : Math.round(score / 10);
         const baseXpReward = difficulty === 'hard' ? 300 : difficulty === 'medium' ? 200 : 100;
-
         const completedAt = new Date().toISOString();
         const validQuestions = selectedQuestionActivities.length;
-        const finalScore = Math.min(score, validQuestions * 10);
-
-        // #58 — 2x XP bonus for perfect score!
-        const isPerfect = finalScore === validQuestions * 10;
-        const xpReward = isPerfect ? baseXpReward * 2 : baseXpReward;
+        const isPerfect = finalCorrectCount >= validQuestions;
+        const perfectBonusXp = isPerfect ? Math.round(baseXpReward * 0.1) : 0;
+        const xpReward = baseXpReward + perfectBonusXp;
+        const finalScore = score;
 
         const recentStorageKey = childId && resolvedBranchId
             ? `recent_questions:${childId}:${resolvedBranchId}`
@@ -374,7 +425,6 @@ export default function LessonPlayer() {
 
             if (completionError) throw completionError;
 
-            // Secure XP grant via server-side function (prevents manipulation & race conditions)
             const { data: newTotal, error: xpError } = await supabase
                 .rpc('grant_xp', { p_child_id: childId, p_xp_amount: xpReward });
 
@@ -382,7 +432,7 @@ export default function LessonPlayer() {
 
             setCompletionStats({
                 score: finalScore,
-                correctCount: Math.round(finalScore / 10),
+                correctCount: finalCorrectCount,
                 xpEarned: xpReward,
                 currentTotalXP: newTotal,
                 totalQuestions: validQuestions
@@ -400,7 +450,7 @@ export default function LessonPlayer() {
 
             setCompletionStats({
                 score: finalScore,
-                correctCount: Math.round(finalScore / 10),
+                correctCount: finalCorrectCount,
                 xpEarned: xpReward,
                 currentTotalXP: xpReward,
                 totalQuestions: validQuestions
@@ -413,7 +463,25 @@ export default function LessonPlayer() {
         return <LoadingScreen />;
     }
 
-    if (!lesson) return <div>Lesson not found</div>;
+    if (!lesson) {
+        return (
+            <div className="flex min-h-screen flex-col items-center justify-center p-8 text-center ring-white bg-white">
+                <h1 className="mb-4 text-2xl font-bold text-brand-blue">Oops! This adventure isn't ready yet.</h1>
+                <p className="mb-8 text-gray-600">We couldn't find the lesson you're looking for.</p>
+                <button onClick={() => navigate(-1)} className="rounded-full bg-brand-blue px-6 py-2 text-white">Go Back</button>
+            </div>
+        );
+    }
+
+    if (activities.length === 0 && !loading) {
+        return (
+            <div className="flex min-h-screen flex-col items-center justify-center p-8 text-center ring-white bg-white">
+                <h1 className="mb-4 text-2xl font-bold text-brand-blue">Still Packing!</h1>
+                <p className="mb-8 text-gray-600">This lesson doesn't have any activities yet. Try another one!</p>
+                <button onClick={() => navigate(-1)} className="rounded-full bg-brand-blue px-6 py-2 text-white">Go Back</button>
+            </div>
+        );
+    }
 
     const returnPath = childId && resolvedBranchId
         ? `/category/${childId}/${resolvedBranchId}`
@@ -428,9 +496,9 @@ export default function LessonPlayer() {
                 xpEarned={completionStats.xpEarned}
                 currentTotalXP={completionStats.currentTotalXP}
                 childId={childId}
+                title={lesson.title}
                 onExit={() => navigate(returnPath)}
                 onRetry={() => {
-                    // #10 — Retry: reset and play again
                     setIsComplete(false);
                     setCompletionStats(null);
                     setSessionNonce(`${Date.now()}-${Math.random()}`);
@@ -468,7 +536,7 @@ export default function LessonPlayer() {
                             <div className="mb-4 text-3xl font-bold text-green-600">Rookie</div>
                             <p className="mb-4 text-gray-500">Quick Start</p>
                             <div className="rounded-full bg-green-100 px-4 py-2 text-sm font-bold text-green-700">
-                                10 Questions
+                                {DIFFICULTY_QUESTION_COUNTS.easy} Questions
                             </div>
                             <p className="mt-4 text-lg font-bold text-brand-yellow">+100 XP</p>
                         </button>
@@ -480,7 +548,7 @@ export default function LessonPlayer() {
                             <div className="mb-4 text-3xl font-bold text-blue-600">Scout</div>
                             <p className="mb-4 text-gray-500">Regular Training</p>
                             <div className="rounded-full bg-blue-100 px-4 py-2 text-sm font-bold text-blue-700">
-                                20 Questions
+                                {DIFFICULTY_QUESTION_COUNTS.medium} Questions
                             </div>
                             <p className="mt-4 text-lg font-bold text-brand-yellow">+200 XP</p>
                         </button>
@@ -492,7 +560,7 @@ export default function LessonPlayer() {
                             <div className="mb-4 text-3xl font-bold text-purple-600">Explorer</div>
                             <p className="mb-4 text-gray-500">Master Class</p>
                             <div className="rounded-full bg-purple-100 px-4 py-2 text-sm font-bold text-purple-700">
-                                30 Questions
+                                {DIFFICULTY_QUESTION_COUNTS.hard} Questions
                             </div>
                             <p className="mt-4 text-lg font-bold text-brand-yellow">+300 XP</p>
                         </button>

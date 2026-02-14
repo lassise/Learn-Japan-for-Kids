@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": ".tmp-supercharge-checks",
+    "rootDir": ".",
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "lib": ["ES2022", "DOM"]
+  },
+  "include": [
+    "scripts/supercharge_checks.ts",
+    "src/lib/supercharge/contentUtils.ts",
+    "src/lib/supercharge/contentQuality.ts",
+    "src/lib/supercharge/contentDedupe.ts",
+    "src/lib/supercharge/generator.ts",
+    "src/lib/supercharge/modeConfig.ts",
+    "src/lib/supercharge/queueProcessor.ts",
+    "src/lib/supercharge/questRunBuilder.ts",
+    "src/lib/supercharge/types.ts"
+  ]
+}

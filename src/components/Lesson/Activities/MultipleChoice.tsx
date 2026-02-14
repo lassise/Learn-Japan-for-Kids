@@ -31,9 +31,18 @@ interface MultipleChoiceProps {
     options: { id: string; text: string; is_correct: boolean; explanation?: string }[];
     onAnswer: (isCorrect: boolean) => void;
     mediaUrl?: string;
+    onSelectionChange?: (made: boolean) => void;
+    submitTrigger?: number;
 }
 
-export default function MultipleChoice({ question, options, onAnswer, mediaUrl }: MultipleChoiceProps) {
+export default function MultipleChoice({
+    question,
+    options,
+    onAnswer,
+    mediaUrl,
+    onSelectionChange,
+    submitTrigger = 0
+}: MultipleChoiceProps) {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [submitted, setSubmitted] = useState(false);
 
@@ -43,10 +52,11 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
     const handleSelect = (id: string) => {
         if (submitted) return;
         setSelectedId(id);
+        onSelectionChange?.(true);
     };
 
     const handleSubmit = () => {
-        if (!selectedId) return;
+        if (!selectedId || submitted) return;
         setSubmitted(true);
         const selectedOption = shuffledOptions.find(o => o.id === selectedId);
         if (selectedOption) {
@@ -64,6 +74,12 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
         }
     };
 
+    useEffect(() => {
+        if (submitTrigger > 0 && !submitted && selectedId) {
+            handleSubmit();
+        }
+    }, [submitTrigger]);
+
     // #82 — Keyboard shortcuts: press 1-4 / A-D to select, Enter to submit
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
@@ -74,9 +90,13 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
             const letterIndex = key.charCodeAt(0) - 'a'.charCodeAt(0);
 
             if (numberIndex >= 0 && numberIndex < shuffledOptions.length) {
-                setSelectedId(shuffledOptions[numberIndex].id);
+                const id = shuffledOptions[numberIndex].id;
+                setSelectedId(id);
+                onSelectionChange?.(true);
             } else if (letterIndex >= 0 && letterIndex < shuffledOptions.length && key.length === 1) {
-                setSelectedId(shuffledOptions[letterIndex].id);
+                const id = shuffledOptions[letterIndex].id;
+                setSelectedId(id);
+                onSelectionChange?.(true);
             } else if (key === 'enter' && selectedId) {
                 handleSubmit();
             }
@@ -84,14 +104,14 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
 
         window.addEventListener('keydown', handleKey);
         return () => window.removeEventListener('keydown', handleKey);
-    });
+    }, [submitted, selectedId, shuffledOptions, onSelectionChange]);
 
     return (
         <div className="flex flex-col space-y-6">
             {/* Question Header */}
             <div className="flex items-start gap-3">
                 <h2 className="text-2xl font-bold text-gray-900 md:text-3xl flex-1">{question}</h2>
-                <SpeakButton text={question} size="md" />
+                <SpeakButton text={question} size="md" autoReadOnMount />
             </div>
 
             {/* Media Context */}
@@ -124,7 +144,6 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
                             submitted && option.is_correct && "border-green-500 bg-green-50 text-green-800 ring-2 ring-green-200"
                         )}
                     >
-                        {/* #82 — Show keyboard shortcut badge */}
                         <span className="mr-3 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-xs font-bold text-gray-400">
                             {idx + 1}
                         </span>
@@ -139,24 +158,11 @@ export default function MultipleChoice({ question, options, onAnswer, mediaUrl }
                 ))}
             </div>
 
-            {/* Check Answer Button */}
-            {!submitted && (
-                <div className="mt-8 flex justify-end">
-                    <button
-                        onClick={handleSubmit}
-                        disabled={!selectedId}
-                        className="transform rounded-full bg-brand-blue px-10 py-4 text-xl font-bold text-white shadow-xl transition-all hover:-translate-y-1 hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
-                    >
-                        Check Answer ✨
-                    </button>
-                </div>
-            )}
-
             {/* Feedback Section */}
             {submitted && (
                 <div className={clsx(
                     "mt-6 animate-in fade-in slide-in-from-bottom-4 duration-500 rounded-2xl p-6 shadow-lg",
-                    options.find(o => o.id === selectedId)?.is_correct ? "bg-green-100 border-2 border-green-200" : "bg-orange-50 border-2 border-orange-100"
+                    shuffledOptions.find(o => o.id === selectedId)?.is_correct ? "bg-green-100 border-2 border-green-200" : "bg-orange-50 border-2 border-orange-100"
                 )}>
                     <div className="flex items-start space-x-4">
                         <div className="text-4xl">

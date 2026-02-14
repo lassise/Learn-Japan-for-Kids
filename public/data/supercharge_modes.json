@@ -1,0 +1,29 @@
+{
+  "questModes": [
+    {
+      "mode": "sixty",
+      "title": "5 Questions",
+      "minutesTarget": 3,
+      "segments": 1,
+      "regularQuestionsPerSegment": 4,
+      "bossIntervalMinutes": 3,
+      "recommended": true
+    },
+    {
+      "mode": "seventy_five",
+      "title": "9 Questions",
+      "minutesTarget": 5,
+      "segments": 2,
+      "regularQuestionsPerSegment": 4,
+      "bossIntervalMinutes": 5
+    },
+    {
+      "mode": "ninety",
+      "title": "13 Questions",
+      "minutesTarget": 7,
+      "segments": 3,
+      "regularQuestionsPerSegment": 4,
+      "bossIntervalMinutes": 7
+    }
+  ]
+}

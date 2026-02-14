@@ -13,6 +13,7 @@ interface LessonCompletionProps {
     childId?: string;
     title?: string;
     message?: string;
+    highlights?: string[];
     onExit: () => void;
     onRetry?: () => void;
 }
@@ -39,6 +40,7 @@ export default function LessonCompletion({
     childId,
     title,
     message,
+    highlights = [],
     onExit,
     onRetry
 }: LessonCompletionProps) {
@@ -302,6 +304,16 @@ export default function LessonCompletion({
                 {/* Header */}
                 <h1 className="mb-2 text-4xl font-extrabold text-brand-blue">{title || "Mission Complete!"}</h1>
                 <p className="mb-8 text-xl font-bold text-gray-500">{message || quote}</p>
+                {highlights.length > 0 && (
+                    <div className="mb-6 rounded-2xl bg-slate-50 p-4 text-left ring-1 ring-slate-100">
+                        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Quest Highlights</p>
+                        <ul className="mt-2 space-y-1 text-sm font-semibold text-slate-700">
+                            {highlights.map((line) => (
+                                <li key={line}>- {line}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
                 {/* Stars Animation */}
                 <div className="mb-8 flex justify-center space-x-2">

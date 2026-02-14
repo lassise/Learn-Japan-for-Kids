@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import ImageWithFallback from '../../common/ImageWithFallback';
 import SpeakButton from '../../common/SpeakButton';
 
@@ -6,11 +7,18 @@ interface InfoSlideProps {
     content: string;
     mediaUrl?: string;
     onContinue: () => void;
+    onMount?: () => void;
 }
 
-export default function InfoSlide({ title, content, mediaUrl, onContinue }: InfoSlideProps) {
+export default function InfoSlide({ title, content, mediaUrl, onContinue: _onContinue, onMount }: InfoSlideProps) {
+    useEffect(() => {
+        if (onMount) {
+            onMount();
+        }
+    }, [onMount]);
+
     return (
-        <div className="flex flex-col min-h-[500px] justify-between space-y-6">
+        <div className="flex flex-col min-h-[400px] justify-between space-y-6">
             <div className="space-y-6">
                 {/* Title with fun color */}
                 {title && <h2 className="text-3xl font-bold text-brand-blue md:text-4xl">{title}</h2>}
@@ -32,19 +40,9 @@ export default function InfoSlide({ title, content, mediaUrl, onContinue }: Info
                         <div className="prose prose-lg prose-blue text-xl leading-relaxed text-gray-700 flex-1">
                             <p>{content}</p>
                         </div>
-                        <SpeakButton text={content} size="md" />
+                        <SpeakButton text={content} size="md" autoReadOnMount />
                     </div>
                 </div>
-            </div>
-
-            {/* Large Continue Button - ensuring it has margin-top for visibility */}
-            <div className="mt-auto pt-8 flex justify-end">
-                <button
-                    onClick={onContinue}
-                    className="transform rounded-full bg-brand-yellow px-10 py-4 text-xl font-bold text-gray-900 shadow-xl transition-all hover:-translate-y-1 hover:bg-yellow-400 active:translate-y-0"
-                >
-                    Continue ➜
-                </button>
             </div>
         </div>
     );

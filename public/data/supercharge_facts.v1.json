@@ -1,0 +1,690 @@
+[
+    {
+        "id":  "food-onigiri-1",
+        "topic":  "food",
+        "difficulty":  "Rookie",
+        "story":  "Mika opens her lunch box. She sees onigiri (oh-nee-GHEE-ree) with seaweed.",
+        "question":  "What is onigiri (oh-nee-GHEE-ree)",
+        "correctAnswer":  "A rice ball snack",
+        "distractors":  [
+                            "A train seat",
+                            "A paper fan"
+                        ],
+        "explanation":  "Onigiri is rice shaped by hand.",
+        "tags":  [
+                     "food",
+                     "lunch"
+                 ]
+    },
+    {
+        "id":  "food-miso-1",
+        "topic":  "food",
+        "difficulty":  "Rookie",
+        "story":  "At breakfast, Ken drinks miso soup. Miso (MEE-soh) is made from fermented beans.",
+        "question":  "What is miso (MEE-soh) often used for",
+        "correctAnswer":  "Soup flavor",
+        "distractors":  [
+                            "Train fuel",
+                            "School chalk"
+                        ],
+        "explanation":  "Miso gives soup a savory taste.",
+        "tags":  [
+                     "food",
+                     "breakfast"
+                 ]
+    },
+    {
+        "id":  "food-bento-1",
+        "topic":  "food",
+        "difficulty":  "Scout",
+        "story":  "Yui packs a bento (BEN-toh) for school. It has rice, eggs, and fruit.",
+        "question":  "What is a bento (BEN-toh)",
+        "correctAnswer":  "A packed meal box",
+        "distractors":  [
+                            "A shrine gate",
+                            "A subway map"
+                        ],
+        "explanation":  "A bento is a meal packed in a box.",
+        "tags":  [
+                     "food",
+                     "school"
+                 ]
+    },
+    {
+        "id":  "food-matcha-1",
+        "topic":  "food",
+        "difficulty":  "Explorer",
+        "story":  "Sora tries matcha (MAHT-cha) ice cream in Kyoto. Matcha comes from green tea leaves.",
+        "question":  "What is matcha (MAHT-cha)",
+        "correctAnswer":  "Powdered green tea",
+        "distractors":  [
+                            "A bus ticket",
+                            "A toy drum"
+                        ],
+        "explanation":  "Matcha is finely ground green tea.",
+        "tags":  [
+                     "food",
+                     "dessert"
+                 ]
+    },
+    {
+        "id":  "transport-eki-1",
+        "topic":  "transport",
+        "difficulty":  "Rookie",
+        "story":  "The family waits at the eki (EH-kee). Eki means train station.",
+        "question":  "What does eki (EH-kee) mean",
+        "correctAnswer":  "Train station",
+        "distractors":  [
+                            "Lunch box",
+                            "Temple bell"
+                        ],
+        "explanation":  "Eki is the word for station.",
+        "tags":  [
+                     "transport",
+                     "phrases"
+                 ]
+    },
+    {
+        "id":  "transport-suica-1",
+        "topic":  "transport",
+        "difficulty":  "Scout",
+        "story":  "Aki taps a Suica card at the gate. The gate opens with a beep.",
+        "question":  "Why does Aki tap the Suica card",
+        "correctAnswer":  "To pay for the ride",
+        "distractors":  [
+                            "To open a lunch box",
+                            "To buy a baseball"
+                        ],
+        "explanation":  "A transit card is used to pay quickly.",
+        "tags":  [
+                     "transport",
+                     "city"
+                 ]
+    },
+    {
+        "id":  "transport-shinkansen-1",
+        "topic":  "transport",
+        "difficulty":  "Explorer",
+        "story":  "They ride the shinkansen (sheen-kahn-SEN) to Osaka. It is a fast train.",
+        "question":  "What is shinkansen (sheen-kahn-SEN)",
+        "correctAnswer":  "A bullet train",
+        "distractors":  [
+                            "A school club",
+                            "A soup spoon"
+                        ],
+        "explanation":  "Shinkansen is Japan\u0027s high-speed train.",
+        "tags":  [
+                     "transport",
+                     "travel"
+                 ]
+    },
+    {
+        "id":  "transport-platform-1",
+        "topic":  "transport",
+        "difficulty":  "Scout",
+        "story":  "Ren follows arrows on the station floor. The arrows show safe boarding lines.",
+        "question":  "Why do riders stand in boarding lines",
+        "correctAnswer":  "To board in order",
+        "distractors":  [
+                            "To pick snacks",
+                            "To wash shoes"
+                        ],
+        "explanation":  "Lines help people board safely.",
+        "tags":  [
+                     "transport",
+                     "safety"
+                 ]
+    },
+    {
+        "id":  "phrases-konnichiwa-1",
+        "topic":  "phrases",
+        "difficulty":  "Rookie",
+        "story":  "Mina says Konnichiwa (Kon-NEE-chee-wah) at noon. Her friend smiles.",
+        "question":  "When can you say Konnichiwa (Kon-NEE-chee-wah)",
+        "correctAnswer":  "As a hello in daytime",
+        "distractors":  [
+                            "Only at bedtime",
+                            "Only on trains"
+                        ],
+        "explanation":  "Konnichiwa is a daytime greeting.",
+        "tags":  [
+                     "phrases",
+                     "greeting"
+                 ]
+    },
+    {
+        "id":  "phrases-arigato-1",
+        "topic":  "phrases",
+        "difficulty":  "Rookie",
+        "story":  "Kai gets help and says Arigato (ah-ree-GAH-toh). Saying thanks is polite.",
+        "question":  "What does Arigato (ah-ree-GAH-toh) express",
+        "correctAnswer":  "Thank you",
+        "distractors":  [
+                            "Good night",
+                            "Please wait"
+                        ],
+        "explanation":  "Arigato is a thank-you phrase.",
+        "tags":  [
+                     "phrases",
+                     "polite"
+                 ]
+    },
+    {
+        "id":  "phrases-sumimasen-1",
+        "topic":  "phrases",
+        "difficulty":  "Scout",
+        "story":  "At a shop, Yui says Sumimasen (soo-mee-mah-SEN) to ask for help.",
+        "question":  "When might you use Sumimasen (soo-mee-mah-SEN)",
+        "correctAnswer":  "To get someone\u0027s attention politely",
+        "distractors":  [
+                            "To order a train",
+                            "To wash a bowl"
+                        ],
+        "explanation":  "Sumimasen can be used to politely call for help.",
+        "tags":  [
+                     "phrases",
+                     "polite"
+                 ]
+    },
+    {
+        "id":  "phrases-itadakimasu-1",
+        "topic":  "phrases",
+        "difficulty":  "Explorer",
+        "story":  "Before eating, classmates say Itadakimasu (ee-tah-dah-kee-MAHS). It shows thanks for the meal.",
+        "question":  "Why do students say Itadakimasu (ee-tah-dah-kee-MAHS)",
+        "correctAnswer":  "To show thanks before eating",
+        "distractors":  [
+                            "To start a race",
+                            "To open a gate"
+                        ],
+        "explanation":  "Itadakimasu is a polite meal phrase.",
+        "tags":  [
+                     "phrases",
+                     "school",
+                     "food"
+                 ]
+    },
+    {
+        "id":  "shrines-torii-1",
+        "topic":  "shrines",
+        "difficulty":  "Rookie",
+        "story":  "The group walks under a torii (TOH-ree-ee) gate. It marks a shrine entrance.",
+        "question":  "What does a torii (TOH-ree-ee) often mark",
+        "correctAnswer":  "A shrine entrance",
+        "distractors":  [
+                            "A lunch line",
+                            "A school desk"
+                        ],
+        "explanation":  "Torii gates mark sacred areas at shrines.",
+        "tags":  [
+                     "shrines",
+                     "culture"
+                 ]
+    },
+    {
+        "id":  "shrines-temizuya-1",
+        "topic":  "shrines",
+        "difficulty":  "Scout",
+        "story":  "At the temizuya (teh-mee-zoo-yah), kids rinse hands with water.",
+        "question":  "Why do visitors use the temizuya (teh-mee-zoo-yah)",
+        "correctAnswer":  "To clean hands before visiting",
+        "distractors":  [
+                            "To cook noodles",
+                            "To buy shoes"
+                        ],
+        "explanation":  "Many people rinse hands as a respectful step.",
+        "tags":  [
+                     "shrines",
+                     "respect"
+                 ]
+    },
+    {
+        "id":  "shrines-ema-1",
+        "topic":  "shrines",
+        "difficulty":  "Explorer",
+        "story":  "Nana writes a wish on an ema (EH-mah) wooden plaque.",
+        "question":  "What is an ema (EH-mah) used for",
+        "correctAnswer":  "Writing wishes",
+        "distractors":  [
+                            "Buying tickets",
+                            "Folding uniforms"
+                        ],
+        "explanation":  "Ema plaques can hold personal wishes.",
+        "uncertain":  true,
+        "tags":  [
+                     "shrines",
+                     "tradition"
+                 ]
+    },
+    {
+        "id":  "school-randoseru-1",
+        "topic":  "school",
+        "difficulty":  "Rookie",
+        "story":  "Hana carries a randoseru (rahn-doh-SEH-roo) to school. It is a sturdy backpack.",
+        "question":  "What is randoseru (rahn-doh-SEH-roo)",
+        "correctAnswer":  "A school backpack",
+        "distractors":  [
+                            "A train whistle",
+                            "A soup bowl"
+                        ],
+        "explanation":  "Randoseru is a classic school bag.",
+        "tags":  [
+                     "school",
+                     "daily-life"
+                 ]
+    },
+    {
+        "id":  "school-kyushoku-1",
+        "topic":  "school",
+        "difficulty":  "Scout",
+        "story":  "Students serve kyushoku (kyoo-SHOH-koo), the school lunch, to each other.",
+        "question":  "What is kyushoku (kyoo-SHOH-koo)",
+        "correctAnswer":  "School lunch",
+        "distractors":  [
+                            "A bus lane",
+                            "A game card"
+                        ],
+        "explanation":  "Kyushoku means school lunch time.",
+        "tags":  [
+                     "school",
+                     "food"
+                 ]
+    },
+    {
+        "id":  "school-cleaning-1",
+        "topic":  "school",
+        "difficulty":  "Explorer",
+        "story":  "After class, students clean together for a few minutes.",
+        "question":  "Why do students clean the classroom together",
+        "correctAnswer":  "To share care for their space",
+        "distractors":  [
+                            "To miss homework",
+                            "To skip lunch"
+                        ],
+        "explanation":  "Cleaning time helps teamwork and responsibility.",
+        "uncertain":  true,
+        "tags":  [
+                     "school",
+                     "teamwork"
+                 ]
+    },
+    {
+        "id":  "culture-hanami-1",
+        "topic":  "culture",
+        "difficulty":  "Rookie",
+        "story":  "Families enjoy hanami (hah-NAH-mee) under cherry blossoms in spring.",
+        "question":  "What is hanami (hah-NAH-mee)",
+        "correctAnswer":  "Viewing flowers",
+        "distractors":  [
+                            "Fixing bicycles",
+                            "Cooking fish"
+                        ],
+        "explanation":  "Hanami means enjoying blossoms.",
+        "tags":  [
+                     "culture",
+                     "nature"
+                 ]
+    },
+    {
+        "id":  "culture-festival-1",
+        "topic":  "culture",
+        "difficulty":  "Scout",
+        "story":  "At a matsuri (maht-SOO-ree), people enjoy games and food stalls.",
+        "question":  "What is a matsuri (maht-SOO-ree)",
+        "correctAnswer":  "A local festival",
+        "distractors":  [
+                            "A classroom test",
+                            "A train ticket app"
+                        ],
+        "explanation":  "Matsuri is a word for festival events.",
+        "tags":  [
+                     "culture",
+                     "community"
+                 ]
+    },
+    {
+        "id":  "culture-bow-1",
+        "topic":  "culture",
+        "difficulty":  "Explorer",
+        "story":  "Two kids bow when greeting their teacher.",
+        "question":  "What can a small bow show",
+        "correctAnswer":  "Respect",
+        "distractors":  [
+                            "Anger",
+                            "Sleepiness"
+                        ],
+        "explanation":  "A bow can show respect in many settings.",
+        "uncertain":  true,
+        "tags":  [
+                     "culture",
+                     "respect"
+                 ]
+    },
+    {
+        "id":  "nature-fuji-1",
+        "topic":  "nature",
+        "difficulty":  "Rookie",
+        "story":  "The class sees Mount Fuji (foo-jee) on a clear day.",
+        "question":  "What is Mount Fuji (foo-jee)",
+        "correctAnswer":  "A famous mountain",
+        "distractors":  [
+                            "A subway line",
+                            "A lunch spoon"
+                        ],
+        "explanation":  "Mount Fuji is a well-known mountain in Japan.",
+        "tags":  [
+                     "nature",
+                     "landmark"
+                 ]
+    },
+    {
+        "id":  "nature-rainy-1",
+        "topic":  "nature",
+        "difficulty":  "Scout",
+        "story":  "In tsuyu (TSOO-yoo), rainy season, kids carry umbrellas.",
+        "question":  "Why do children carry umbrellas in tsuyu (TSOO-yoo)",
+        "correctAnswer":  "Because it rains often",
+        "distractors":  [
+                            "Because trains stop forever",
+                            "Because lunch is spicy"
+                        ],
+        "explanation":  "Tsuyu is a rainy period in many places.",
+        "uncertain":  true,
+        "tags":  [
+                     "nature",
+                     "weather"
+                 ]
+    },
+    {
+        "id":  "transport-bus-1",
+        "topic":  "transport",
+        "difficulty":  "Rookie",
+        "story":  "The bus stops at each marked sign. Riders line up and wait calmly.",
+        "question":  "What should riders do at a busy bus stop",
+        "correctAnswer":  "Wait in line",
+        "distractors":  [
+                            "Run into the road",
+                            "Sit on the bus roof"
+                        ],
+        "explanation":  "Lines make boarding safer and fair.",
+        "tags":  [
+                     "transport",
+                     "safety"
+                 ]
+    },
+    {
+        "id":  "food-ramen-1",
+        "topic":  "food",
+        "difficulty":  "Scout",
+        "story":  "At a ramen (RAH-men) shop, broth and noodles are served hot.",
+        "question":  "What is ramen (RAH-men)",
+        "correctAnswer":  "Noodles in broth",
+        "distractors":  [
+                            "A shrine gate",
+                            "A school bell"
+                        ],
+        "explanation":  "Ramen is a noodle dish with broth.",
+        "tags":  [
+                     "food",
+                     "restaurant"
+                 ]
+    },
+    {
+        "id":  "phrases-ohayo-1",
+        "topic":  "phrases",
+        "difficulty":  "Rookie",
+        "story":  "In the morning, Emi says Ohayo (oh-hah-YOH) to her classmate.",
+        "question":  "When is Ohayo (oh-hah-YOH) commonly used",
+        "correctAnswer":  "Morning greeting",
+        "distractors":  [
+                            "During fireworks",
+                            "When buying train cards"
+                        ],
+        "explanation":  "Ohayo is used in the morning.",
+        "tags":  [
+                     "phrases",
+                     "greeting"
+                 ]
+    },
+    {
+        "id":  "school-club-1",
+        "topic":  "school",
+        "difficulty":  "Scout",
+        "story":  "After class, friends join bukatsu (boo-KAHT-soo), school clubs.",
+        "question":  "What is bukatsu (boo-KAHT-soo)",
+        "correctAnswer":  "After-school club activity",
+        "distractors":  [
+                            "A train bridge",
+                            "A lunch plate"
+                        ],
+        "explanation":  "Bukatsu means school club activities.",
+        "tags":  [
+                     "school",
+                     "community"
+                 ]
+    },
+    {
+        "id":  "culture-origami-1",
+        "topic":  "culture",
+        "difficulty":  "Rookie",
+        "story":  "The class folds origami (oh-ree-GAH-mee) cranes from paper.",
+        "question":  "What is origami (oh-ree-GAH-mee)",
+        "correctAnswer":  "Paper folding art",
+        "distractors":  [
+                            "A bus route map",
+                            "A noodle soup"
+                        ],
+        "explanation":  "Origami is the art of folding paper.",
+        "tags":  [
+                     "culture",
+                     "art"
+                 ]
+    },
+    {
+        "id":  "nature-sakura-2",
+        "explanation":  "Sakura means cherry blossom flowers.",
+        "correctAnswer":  "Cherry blossom",
+        "story":  "Aya sees sakura (sah-KOO-rah) flowers in spring. The petals are soft and pink.",
+        "question":  "What is sakura (sah-KOO-rah)",
+        "tags":  [
+                     "nature",
+                     "spring"
+                 ],
+        "topic":  "nature",
+        "distractors":  [
+                            "A bus card",
+                            "A lunch tray"
+                        ],
+        "difficulty":  "Rookie"
+    },
+    {
+        "id":  "transport-norikae-1",
+        "explanation":  "Norikae is a transfer between lines.",
+        "correctAnswer":  "Transfer to another train",
+        "story":  "The sign says norikae (noh-ree-KAH-eh). It helps riders change trains.",
+        "question":  "What does norikae (noh-ree-KAH-eh) help you do",
+        "tags":  [
+                     "transport",
+                     "station"
+                 ],
+        "topic":  "transport",
+        "distractors":  [
+                            "Cook soup",
+                            "Buy shoes"
+                        ],
+        "difficulty":  "Scout"
+    },
+    {
+        "id":  "food-udon-2",
+        "explanation":  "Udon is a noodle dish made from wheat flour.",
+        "correctAnswer":  "Thick wheat noodles",
+        "story":  "At lunch, Mei eats udon (OO-dohn) noodles. They are thick and chewy.",
+        "question":  "What is udon (OO-dohn)",
+        "tags":  [
+                     "food",
+                     "lunch"
+                 ],
+        "topic":  "food",
+        "distractors":  [
+                            "A school bell",
+                            "A train map"
+                        ],
+        "difficulty":  "Rookie"
+    },
+    {
+        "id":  "school-undokai-1",
+        "explanation":  "Undokai is a school event with games and races.",
+        "correctAnswer":  "School sports day",
+        "story":  "Students join undokai (oon-doh-KAI), a school sports day. Teams cheer for each other.",
+        "question":  "What is undokai (oon-doh-KAI)",
+        "tags":  [
+                     "school",
+                     "community"
+                 ],
+        "topic":  "school",
+        "distractors":  [
+                            "Train cleaning time",
+                            "Noodle soup"
+                        ],
+        "difficulty":  "Scout"
+    },
+    {
+        "id":  "phrases-onegaishimasu-1",
+        "explanation":  "Onegaishimasu is a polite phrase for requests and teamwork.",
+        "correctAnswer":  "When politely asking or starting together",
+        "story":  "Riku says Onegaishimasu (oh-neh-gai-shee-MAHS) before practice. It sounds polite and kind.",
+        "question":  "When can Onegaishimasu (oh-neh-gai-shee-MAHS) be used",
+        "tags":  [
+                     "phrases",
+                     "polite"
+                 ],
+        "topic":  "phrases",
+        "distractors":  [
+                            "Only at bedtime",
+                            "Only on a bus"
+                        ],
+        "difficulty":  "Scout"
+    },
+    {
+        "id":  "culture-yukata-1",
+        "explanation":  "Yukata is often worn at summer festivals.",
+        "correctAnswer":  "A light summer robe",
+        "story":  "At a summer fair, Hana wears a yukata (yoo-KAH-tah). It is a light cotton robe.",
+        "question":  "What is yukata (yoo-KAH-tah)",
+        "tags":  [
+                     "culture",
+                     "festival"
+                 ],
+        "topic":  "culture",
+        "distractors":  [
+                            "A train ticket app",
+                            "A classroom chair"
+                        ],
+        "difficulty":  "Explorer"
+    },
+    {
+        "uncertain":  true,
+        "id":  "shrines-komainu-1",
+        "explanation":  "Komainu statues are often placed near shrine paths.",
+        "correctAnswer":  "Guardian lion-dog statues",
+        "story":  "Near the gate, Ken sees komainu (koh-mai-NEE-oo) statues. They sit in pairs.",
+        "question":  "What are komainu (koh-mai-NEE-oo) often seen as",
+        "tags":  [
+                     "shrines",
+                     "symbols"
+                 ],
+        "topic":  "shrines",
+        "distractors":  [
+                            "Lunch boxes",
+                            "Bus drivers"
+                        ],
+        "difficulty":  "Scout"
+    },
+    {
+        "uncertain":  true,
+        "id":  "general-prefecture-1",
+        "explanation":  "A prefecture is a regional administrative area.",
+        "correctAnswer":  "A regional area of government",
+        "story":  "Japan has prefectures (PREE-fek-cherz), like states in some countries. Each place can feel a little different.",
+        "question":  "What does prefecture mean here",
+        "tags":  [
+                     "general",
+                     "geography"
+                 ],
+        "topic":  "general",
+        "distractors":  [
+                            "A noodle shape",
+                            "A train whistle"
+                        ],
+        "difficulty":  "Explorer"
+    },
+    {
+        "uncertain":  true,
+        "id":  "nature-onsen-1",
+        "explanation":  "Onsen areas use natural hot spring water. It can be different in different places.",
+        "correctAnswer":  "A hot spring bath place",
+        "story":  "Families visit an onsen (ohn-SEN), a hot spring bath area. Rules can change by place.",
+        "question":  "What is an onsen (ohn-SEN)",
+        "tags":  [
+                     "nature",
+                     "culture"
+                 ],
+        "topic":  "nature",
+        "distractors":  [
+                            "A school exam",
+                            "A bus lane"
+                        ],
+        "difficulty":  "Explorer"
+    },
+    {
+        "id":  "transport-manaca-1",
+        "explanation":  "Transit IC cards are used for quick payment.",
+        "correctAnswer":  "To pay and enter transit",
+        "story":  "Nao taps a Manaca card at the gate. The gate opens quickly.",
+        "question":  "Why tap a Manaca card",
+        "tags":  [
+                     "transport",
+                     "city"
+                 ],
+        "topic":  "transport",
+        "distractors":  [
+                            "To fold paper",
+                            "To ring a bell"
+                        ],
+        "difficulty":  "Rookie"
+    },
+    {
+        "id":  "food-takoyaki-1",
+        "explanation":  "Takoyaki is a popular warm snack.",
+        "correctAnswer":  "Round savory snack balls",
+        "story":  "At a stall, Jo tries takoyaki (tah-koh-YAH-kee) balls. They are served warm.",
+        "question":  "What is takoyaki (tah-koh-YAH-kee)",
+        "tags":  [
+                     "food",
+                     "festival"
+                 ],
+        "topic":  "food",
+        "distractors":  [
+                            "A train seat type",
+                            "A school notebook"
+                        ],
+        "difficulty":  "Scout"
+    },
+    {
+        "id":  "phrases-konbanwa-1",
+        "explanation":  "Konbanwa is used in the evening.",
+        "correctAnswer":  "As an evening greeting",
+        "story":  "In the evening, Yumi says Konbanwa (kohn-BAHN-wah).",
+        "question":  "When can you use Konbanwa (kohn-BAHN-wah)",
+        "tags":  [
+                     "phrases",
+                     "greeting"
+                 ],
+        "topic":  "phrases",
+        "distractors":  [
+                            "Only at lunch",
+                            "Only in class tests"
+                        ],
+        "difficulty":  "Rookie"
+    }
+]
